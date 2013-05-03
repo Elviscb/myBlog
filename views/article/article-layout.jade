@@ -1,0 +1,51 @@
+extends ../layout
+
+block content
+    ul.breadcrumb.pull-right
+        li
+            a(href="#") Home
+            span.divider /
+        li heh
+    h2.page-header #{article.name}
+    div.row
+        div.span3
+            div#article-nav(data-spy="affix",data-offset-top="160",style="width:258px;top:40px;")
+                ul.nav
+                    //li.nav-header(style="text-transform:none") Hi,this is elvis's HomePage
+                    //li.divider
+                    li.active
+                        a(href="#") 文字
+                            i.icon-chevron-right.pull-right
+                    //li.divider
+                    li
+                        a(href="#") 代码
+                            i.icon-chevron-right.pull-right
+
+        div.span9
+            div
+                ul#article-inner-nav.nav.nav-tabs
+                    li.active
+                        a(href="#tab1",data-toggle="tab") 文字
+                    li
+                        a(href="#tab2",data-toggle="tab",style="margin-right:0") 代码
+                div.tab-content(style="clear:both")
+                    div.tab-pane.active#tab1
+                        p !{article.text}
+                    div.tab-pane#tab2
+                        p
+                            code #{article.code}
+                block article
+    script(src="/javascripts/markdown.js");
+    script.
+        /*
+        function Editor(input, preview) {
+            this.update = function () {
+              preview.innerHTML = markdown.toHTML(input.value);
+            };
+            input.editor = this;
+            this.update();
+        }
+        new Editor($("#tab1 p"), $("#tab1 p"));
+        */
+
+        //$("#tab1 p").html(markdown.toHTML($("#tab1 p").html()));

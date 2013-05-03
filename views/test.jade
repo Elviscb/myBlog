@@ -1,0 +1,363 @@
+//
+   Created with JetBrains WebStorm.
+   User: Administrator
+   Date: 13-4-23
+   Time: 上午10:23
+   To change this template use File | Settings | File Templates.
+extends layout
+
+block content
+    p.muted Fusce dapibus, tellus ac cursus commodo, tortor mauris nibh.
+    p.text-warning Etiam porta sem malesuada magna mollis euismod.
+    p.text-error Donec ullamcorper nulla non metus auctor fringilla.
+    p.text-info Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis.
+    p.text-success Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+
+    pull-right.pull-right pull-right
+
+    abbr(title="attribute") attr
+
+    br
+    br
+
+    blockquote
+        p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.
+        small Someone famous
+            cite(title="Source Title") Source Title
+
+    dl.dl-horizontal
+        dt first
+        dt second
+
+        dd heh1
+        dd heh2
+
+    p For example,
+        code &lt;section&gt;
+        | should be wrapped as inline.
+
+    table.table.table-bordered.table-hover
+        thead
+            th #
+            th First Name
+            th Last Name
+            th Username
+        tr.error
+            td(rowspan="2") 1
+            td Mark
+            td Otto
+            td @mdo
+        tr
+            td Mark
+            td Otto
+            td @mdo
+        tr.info
+            td 2
+            td(colspan="2") Jacob
+            td @fat
+
+    form
+        fieldset
+        legend Legend
+        Label name
+        input(type="text",placeholder="Type something...").input-medium.search-query
+        span.help-block Example block-level help text here.
+        label.checkbox
+            input(type="checkbox")
+            |Check me out
+        button.btn(type="submit") Submit
+
+    form.form-horizontal
+        div.control-group
+            label.control-label(for="inputEmail") Email
+            div.controls
+                input#inputEmail(type="email",placeholder="Email")
+        div.control-group
+            label.control-label(for="inputPassword") Password
+            div.controls
+                input#inputPassword(type="password",placeholder="Password")
+        div.control-group
+            div.controls
+                label.checkbox
+                    input(type="checkbox") Remember me
+                button(type="submit").btn Sign in
+
+    select
+        option 1
+        option 2
+        option 3
+        option 4
+
+    br
+
+    select(multiple='multiple')
+        option 1
+        option 2
+        option 3
+        option 4
+
+    br
+
+    div.input-prepend
+        span.add-on @
+        input.span2#prependedInput(type="text",placeholder="Username")
+
+    br
+
+    div.input-append
+        input.span2#appendedInput(type="text")
+        span.add-on .00
+
+    br
+
+    div.input-prepend.input-append
+        span.add-on $
+        input.span2#appendedPrependedInput(type="text")
+        span.add-on .00
+
+    br
+
+    div.input-append
+        input.span2#appendedInputButton(type="text")
+        button.btn(type="button") Go!
+
+    br
+
+    div.input-append
+        input.span2#appendedInputButtons(type="text")
+        button.btn(type="button") Search
+        button.btn(type="button") Options
+
+    br
+
+    div.input-append
+        input.span2#appendedDropdownButton(type="text")
+        div.btn-group
+            button.btn.dropdown-toggle(data-toggle="dropdown") Action
+                span.caret
+            ul.dropdown-menu
+                li
+                    a 1
+                li
+                    a
+                        i.icon-pencil
+                        | &nbsp;2
+                li.divider
+                li
+                    a 3
+
+    form.form-horizontal
+        div.control-group.warning
+            label.control-label(for="inputWarning") Input with warning
+            div.controls
+                input#inputWarning(type="text")
+                span.help-inline Something may have gone wrong
+
+        div.control-group.error
+            label.control-label(for="inputError") Input with error
+            div.controls
+                input#inputError(type="text")
+                span.help-inline Please correct the error
+
+        div.control-group.info
+            label.control-label(for="inputInfo") Input with info
+            div.controls
+                input#inputInfo(type="text")
+                span.help-inline Username is already taken
+
+        div.control-group.success
+            label.control-label(for="inputSuccess") Input with success
+            div.controls
+                input#inputSuccess(type="text")
+                span.help-inline Woohoo!
+
+    ul.nav.nav-tabs
+        li.active
+            a(href="#") Home
+        li
+            a(href="#") link1
+        li
+            a(href="#") link2
+
+    ul.nav.nav-pills
+        li.active
+            a(href="#") Home
+        li
+            a(href="#") link1
+        li
+            a(href="#") link2
+
+    ul.nav.nav-tabs
+        li.active
+            a(href="#") Home
+        li
+            a(href="#") link1
+        li
+            a(href="#") link2
+        li.dropdown
+            a.dropdown-toggle(data-toggle="dropdown",href="#") Dropdown
+                b.caret
+            ul.dropdown-menu
+                li
+                    a 1
+                li
+                    a
+                        i.icon-pencil
+                        | 2
+
+    div.well(style="padding:8px 0;width:300px")
+        ul.nav.nav-list
+            li.nav-header List header
+            li.active
+                a(href="#") Home
+            li.nav-header users
+            li
+                a(href="#") Joe
+            li.divider
+                li
+                    a(href="#") help
+
+    div.tabbable <!-- Only required for left/right tabs -->
+        ul.nav.nav-tabs
+            li.active
+                a(href="#tab1",data-toggle="tab") Section 1
+            li
+                a(href="#tab2",data-toggle="tab") Section 2
+        div.tab-content
+            div.tab-pane.active#tab1
+                p I'm in Section 1.
+            div.tab-pane#tab2
+                p Howdy, I'm in Section 2.
+
+    div.tabbable.tabs-left
+        ul.nav.nav-tabs
+            li.active
+                a(href="#left-tab1",data-toggle="tab") Section 1
+            li
+                a(href="#left-tab2",data-toggle="tab") Section 2
+        div.tab-content
+            div.tab-pane.active#left-tab1
+                p I'm in Section 1.
+            div.tab-pane#left-tab2
+                p Howdy, I'm in Section 2.
+
+    div.tabbable.tabs-right
+        ul.nav.nav-tabs
+            li.active
+                a(href="#right-tab1",data-toggle="tab") Section 1
+            li
+                a(href="#right-tab2",data-toggle="tab") Section 2
+        div.tab-content
+            div.tab-pane.active#right-tab1
+                p I'm in Section 1.
+            div.tab-pane#right-tab2
+                p Howdy, I'm in Section 2.
+
+    ul.breadcrumb
+        li
+            a(href="#") Home
+            span.divider /
+        li
+            a(href="#") Library
+            span.divider /
+        li.active Data
+
+    div.alert.alert-block
+        button(type="button",data-dismiss="alert").close &times;
+        h4 Warning!
+        | Best check yo self, you're not...
+
+    div.alert.alert-success ok!
+        button(type="button",data-dismiss="alert").close &times;
+
+    div.alert.alert-error something wrong!
+        button(type="button",data-dismiss="alert").close &times;
+
+    div.alert.alert-info e...
+        button(type="button",data-dismiss="alert").close &times;
+
+    div.progress
+        div.bar(style="width: 60%;")
+
+    div.progress.progress-striped
+        div.bar(style="width: 20%;")
+
+    div.progress.progress-striped.active
+        div.bar(style="width: 20%;")
+
+    div.progress.progress-info.progress-striped
+        div.bar(style="width: 20%")
+
+    div.progress.progress-success.progress-striped
+        div.bar(style="width: 40%")
+
+    div.progress.progress-warning.progress-striped
+        div.bar(style="width: 60%")
+
+    div.progress.progress-danger.progress-striped
+        div.bar(style="width: 80%")
+
+    div.media
+        a.pull-left(href="#")
+            img.media-object(data-src="holder.js/64x64",alt="64x64",style="width: 64px; height: 64px;")
+        div.media-body
+            h4.media-heading Media heading
+            | Cras sit amet nibh libero, in gravida nulla.
+            | Nulla vel metus scelerisque ante sollicitudin commodo.
+            | Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.
+            | Fusce condimentum nunc ac nisi vulputate fringilla.
+            | Donec lacinia congue felis in faucibus.
+
+            <!-- Nested media object -->
+            div.media
+                a.pull-left
+                    img.media-object(data-src="holder.js/64x64",alt="64x64",style="width: 64px; height: 64px;")
+                div.media-body
+                    h4.media-heading Media heading 2
+                    | haha
+
+    table.table.table-bordered.table-striped
+        thead
+            tr
+                th Labels
+                th Markup
+        tbody
+            tr
+                td
+                    span.label Default
+                td
+                    code &lt;span class="label"&gt;Default&lt;/span&gt;
+            tr
+                td
+                    span.label.label-success Success
+                td
+                    code &lt;span class="label label-success"&gt;Success&lt;/span&gt;
+            tr
+                td
+                    span.label.label-warning Warning
+                td
+                    code &lt;span class="label label-warning"&gt;Warning&lt;/span&gt;
+            tr
+                td
+                    span.label.label-important Important
+                td
+                    code &lt;span class="label label-important"&gt;Important&lt;/span&gt;
+            tr
+                td
+                    span.label.label-info Info
+                td
+                    code &lt;span class="label label-info"&gt;Info&lt;/span&gt;
+            tr
+                td
+                    span.label.label-inverse Inverse
+                td
+                    code &lt;span class="label label-inverse"&gt;Inverse&lt;/span&gt;
+
+    //unless expr = if !expr
+    unless false
+        | heh
+
+    br
+
+    if !false
+        | kll
