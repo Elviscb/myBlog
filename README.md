@@ -1,3 +1,6 @@
 #Hi,this is my blog's server 
 
-I will update this file soon...
+##article
+
+I have change the markdown.js to match github's
+markdown language style
