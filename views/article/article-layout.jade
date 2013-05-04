@@ -9,18 +9,19 @@ block content
     h2.page-header #{article.name}
     div.row
         div.span3
-            div#article-nav(data-spy="affix",data-offset-top="160",style="width:258px;top:40px;")
+            div#left-nav(data-spy="affix",data-offset-top="160",style="width:258px;top:22px;")
                 ul.nav
-                    //li.nav-header(style="text-transform:none") Hi,this is elvis's HomePage
-                    //li.divider
-                    li.active
-                        a(href="#") 文字
-                            i.icon-chevron-right.pull-right
-                    //li.divider
-                    li
-                        a(href="#") 代码
-                            i.icon-chevron-right.pull-right
-
+                    each v,i in menus
+                        if i==0
+                            li.nav-header(style="padding-top:13px") #{v[1]}
+                        else if i==1
+                            li.active
+                                a(href="##{v[0]}") #{v[1]}
+                                    i.icon-chevron-right.pull-right
+                        else
+                            li
+                                a(href="##{v[0]}") #{v[1]}
+                                    i.icon-chevron-right.pull-right
         div.span9
             div
                 ul#article-inner-nav.nav.nav-tabs
@@ -35,8 +36,12 @@ block content
                         p
                             code #{article.code}
                 block article
-    script(src="/javascripts/markdown.js");
-    script.
+    script(src="/syntaxhighlighter/scripts/shCore.js")
+    script(src="/syntaxhighlighter/scripts/shAutoloader.js")
+    script(src="/javascripts/syntax.js")
+    link(rel="stylesheet",href="/syntaxhighlighter/styles/shCoreDefault.css")
+    //script(src="/javascripts/markdown.js")
+    //script.
         /*
         function Editor(input, preview) {
             this.update = function () {
@@ -48,4 +53,4 @@ block content
         new Editor($("#tab1 p"), $("#tab1 p"));
         */
 
-        //$("#tab1 p").html(markdown.toHTML($("#tab1 p").html()));
+        $("#tab1 p").html(markdown.toHTML($("#tab1 p").html()));

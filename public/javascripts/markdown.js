@@ -307,7 +307,7 @@ Markdown.dialects.Gruber = {
 
       if ( !m ) return undefined;
 
-      var header = [ "header", { level: m[ 1 ].length } ];
+      var header = [ "header", { level: m[ 1 ].length, id: m[ 2 ].replace(/\s/g,"") } ];
       Array.prototype.push.apply(header, this.processInline(m[ 2 ]));
 
       if ( m[0].length < block.length )
@@ -371,6 +371,67 @@ Markdown.dialects.Gruber = {
 
       return [ [ "code_block", ret.join("\n") ] ];
     },
+
+    codeE: function code(block, next) {
+        // |    Foo
+        // |bar
+        // should be a code block followed by a paragraph. Fun
+        //
+        // There might also be adjacent code block to merge.
+
+        var ret = ["codeE_block"],
+            re = /```([^\\\r\\\n]*)\s+([\s\S]*)\n```/,
+            ref = /```([^\\\r\\\n]*)\s+([\s\S]*)/,
+            ree = /([\s\S]*)\n```/,
+            match = 0;
+
+        // 3 ` + lang
+        if (!block.match(re)){
+            if( !block.match(ref) ){
+                return undefined;
+            } else match = 2;
+        } else match = 1;
+
+        switch(match){
+            case 1:
+                this.loop_re_over_block(
+                    re, block.valueOf(), function (m) {
+                        ret.push( {
+                            class : "brush: " + m[1] ,
+                            lang: m[1]
+                        } );
+                        ret.push( m[2] );
+                    });
+                break;
+            case 2:
+                var r = [], m, b;
+                m = block.match( ref );
+                ret.push( {
+                    class : "brush: " + m[1],
+                    lang: m[1]
+                } );
+                r.push( m[2] );
+
+                block_search:
+                    do {
+                        if(next.length){
+                            block = next.shift();
+                            if( (m = block.match( ree )) ){
+                                r.push(m[1]);
+                                ret.push(r.join("\n\n"));
+                                break block_search;
+                            }else{
+                                r.push(block);
+                            }
+                        }else break block_search;
+                    } while (true);
+
+                break;
+        }
+
+        return [ ret ];
+    },
+
 
     horizRule: function horizRule( block, next ) {
       // this needs to find any hr in the block to handle abutting blocks
@@ -959,7 +1020,7 @@ Markdown.dialects.Gruber.inline = {
       // Always skip over the opening ticks.
       var m = text.match( /(`+)(([\s\S]*?)\1)/ );
 
-      if ( m && m[2] )
+      if ( m && m[2] && m[3] )
         return [ m[1].length + m[2].length, [ "inlinecode", m[3] ] ];
       else {
         // TODO: No matching end code found - warn!
@@ -1494,6 +1555,12 @@ function convert_tree_to_html( tree, references, options ) {
       var code = [ "code" ];
       code.push.apply( code, jsonml.splice( i ) );
       jsonml[ i ] = code;
+      break;
+    case "codeE_block":
+      jsonml[ 0 ] = "pre";
+      i = attrs ? 2 : 1;
+      var code = [ null ];
+      jsonml[ i ] = jsonml.splice( i )[0];
       break;
     case "inlinecode":
       jsonml[ 0 ] = "code";
