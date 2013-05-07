@@ -1,0 +1,7 @@
+extends ../layout
+
+block content
+    ul
+        for v,i in files
+            li
+                a(href="#{v}") #{v}

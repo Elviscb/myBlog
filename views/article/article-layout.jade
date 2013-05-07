@@ -2,10 +2,14 @@ extends ../layout
 
 block content
     ul.breadcrumb.pull-right
-        li
-            a(href="#") Home
-            span.divider /
-        li heh
+        - for(var i=locsAll.length-1;i > -1;i--){
+            li
+                if i-1
+                    a(href="#{locsAll[i-1]}") #{locsAll[i--]}
+                    span.divider /
+                else
+                    span #{locsAll[i--]}
+        - }
     h2.page-header #{article.name}
     div.row
         div.span3
@@ -39,7 +43,7 @@ block content
     script(src="/syntaxhighlighter/scripts/shCore.js")
     script(src="/syntaxhighlighter/scripts/shAutoloader.js")
     script(src="/javascripts/syntax.js")
-    link(rel="stylesheet",href="/syntaxhighlighter/styles/shCoreDefault.css")
+    link(rel="stylesheet",href="/syntaxhighlighter/styles/shCoreEclipse.css")
     //script(src="/javascripts/markdown.js")
     //script.
         /*
