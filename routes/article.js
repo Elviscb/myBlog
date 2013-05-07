@@ -5,7 +5,7 @@ var fs = require("fs"),
 
 module.exports = function (app) {
     app.get("/articles*",function(req,res){
-        var pathname = decodeURI(url.parse(req.url).pathname);
+        var pathname = decodeURI(url.parse(req.url).pathname),menu_loc="/articles";
 
         var realPath = pathname.substring(1);
 
@@ -51,6 +51,7 @@ module.exports = function (app) {
                         //输出
                         res.render("article/list",{
                             title: pathname,
+                            url: menu_loc,
                             files: files
                         });
 
@@ -81,7 +82,7 @@ module.exports = function (app) {
                     }
 
                     res.render("article/article", {
-                        url: "/articles",
+                        url: menu_loc,
                         menus: menus,
                         locsAll: locsAll,
                         article: {
