@@ -13,28 +13,31 @@ h2#title {
 }
 
 #left-nav ul{
-    border: 1px solid #dddddd;
     background: rgb(252, 252, 252);
 }
 
 #left-nav ul li a{
-    padding: 10px 0 10px 15px;
-    margin: 10px;
-    border: 1px solid #dddddd;
+    padding: 10px 0 10px 0px;
+    margin: 5px 15px;
+    border-bottom: 1px solid #dddddd;
     background-color: #FFFFFF;
 }
 
-#left-nav ul li a:hover{
-    background-color: #f3f3f3;
+#left-nav ul li a:hover i{
+    display: inline-block;
 }
 
 #left-nav ul li.active a{
-    background: #5ABBEC;
-    color: #FFFFFF;
+    color: #777;
 }
 
-#left-nav .active i{
-    background-image: url("/images/glyphicons-halflings-white.png");
+#left-nav li a i{
+    display: none;
+}
+
+#left-nav li.active a i{
+    /*background-image: url("/images/glyphicons-halflings-white.png");*/
+    display: inline-block;
 }
 
 #article-inner-nav{

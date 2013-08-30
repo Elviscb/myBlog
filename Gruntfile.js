@@ -33,21 +33,21 @@ module.exports = function(grunt) {
     },
 
     watch: {
+      static: {
+        files: 'src/less/*.less',
+        tasks: ['less:development']
+      },
       less: {
         files: 'src/less/*.less',
         tasks: ['less:development']
       },
-      tmpl: {
-        files: 'src/tmpl/**/*.jade',
-        tasks: ['jade', 'default']
-      },
-      js: {
-        files: 'src/javascripts/**',
-        tasks: ['concat']
+      article: {
+        files: 'articles/mds/*.md',
+        tasks: ['article']
       },
       other: {
-        files: 'src/img/**',
-        tasks: ['default']
+        files: ['src/img/**','src/public/**','src/javascripts/**','src/stylesheets/**'],
+        tasks: ['copy']
       }
     },
 
@@ -126,9 +126,9 @@ module.exports = function(grunt) {
   // Load local tasks
   grunt.loadTasks('tasks'); // getWiki, docs tasks
   
-  grunt.registerTask('build', ['clean', 'copy', 'jade']);
+  grunt.registerTask('build', ['clean', 'copy', 'jade', 'article']);
   grunt.registerTask('default', ['build', 'less:production']);
-  grunt.registerTask('dev', ['build', 'less:development', 'jshint', 'watch']);
+  grunt.registerTask('dev', ['build', 'less:development', 'watch']);
   //grunt.registerTask('test', ['nodeunit']);
   grunt.registerTask('serve', ['server']);
 };

@@ -4,7 +4,6 @@ module.exports = function (grunt) {
 
     var express = require('express')
       , http = require('http')
-      , highlighter = require('highlight.js')
       , marked = require('marked')
       , url = require('url')
       , path = require("path")
@@ -43,6 +42,9 @@ module.exports = function (grunt) {
 //                compress: true
 //            }));
             app.use(express.static(path.join(rootdir, 'build')));
+            app.use(function(req,res){
+                res.redirect("404.html");
+            });
             app.use(express.errorHandler({
                 dumpExceptions: false,
                 showStack: false
@@ -79,7 +81,7 @@ module.exports = function (grunt) {
         });
 
         //articles
-        app.get("/articles*", function (req, res) {
+        app.get("/articles*", function (req, res, next) {
             var pathname = decodeURI(url.parse(req.url).pathname), menu_loc = "/articles";
             var realPath = pathname.substring(1);
             if (!path.extname(realPath) && realPath[realPath.length - 1] !== "/")
@@ -87,13 +89,14 @@ module.exports = function (grunt) {
             else read_file(realPath).then(function (data) {
                 if (!data) {
                     //console.log("Can't find file:"+realPath);
-                    res.writeHead(404, {
-                        'Content-Type': 'text/plain'
-                    });
-
-                    res.write("This request URL " + pathname + " was not found on this server.");
-
-                    return res.end();
+                    next();
+//                    res.writeHead(404, {
+//                        'Content-Type': 'text/plain'
+//                    });
+//
+//                    res.write("This request URL " + pathname + " was not found on this server.");
+//
+//                    return res.end();
                 } else {
                     if (data instanceof Array) {
                         res.render("article/list", {
@@ -103,54 +106,7 @@ module.exports = function (grunt) {
                         });
                     } else {
                     	
-                    	marked.setOptions({
-                            gfm:true,
-                            anchors: true,
-//                            base: "/",
-                            pedantic:false,
-                            smartypants:true,
-//                            sanitize:true,
-                            // callback for code highlighter
-                        highlight:function (code, lang) {
-                            try{
-                                return highlighter.highlight(lang, code).value;
-                            }catch(e){
-                                return highlighter.highlightAuto(code).value;
-                            }
-                        }
-                        });
-                    	
-                        var text=marked(data.toString())
-                          , locs, locsAll = [];
-                        
-//                        s = markdown.parse(data.toString());
-//                        for (var i in s) {
-//                            t = s[i];
-//                            if (t instanceof Array && t[0] == "header") {
-//                                if (t[1]["level"] < 3)
-//                                    menus.push([ t[1]["id"], t[2] ]);
-//                            }
-//                        }
-//                        text = markdown.toHTML(s);
-
-                        locs = realPath.split("/");
-                        while (locs.length) {
-                            locsAll.push("/" + locs.join("/"), locs.pop());
-                        }
-
-                        read_file(realPath.substring(0,realPath.lastIndexOf("/"))).then(function(files){
-                            res.render("article/article", {
-                                url: menu_loc,
-                                menus: files,
-                                locsAll: locsAll,
-                                article: {
-                                    name: locsAll[1].replace(/\.[^.]*$/g,""),
-                                    text: text,
-                                    code: data
-                                },
-                                title: req.params.article
-                            });
-                        }).done();
+                    	res.redirect(req.url.replace(/.md$/g,".html"));
 
                     }
                 }
