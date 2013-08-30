@@ -1,0 +1,33 @@
+doctype 5
+html
+    head
+        title Hi，elvis
+        link(rel='stylesheet', href='/stylesheets/pure-min.css')
+        link(rel='stylesheet', href='/stylesheets/administer.css')
+        link(rel='stylesheet', href='/stylesheets/jqtree.css')
+    body
+        div.pure-menu.pure-menu-open.pure-menu-horizontal#topNav
+            a.pure-menu-heading Elvis
+
+            ul
+                li
+                    a(href="/") Home
+                li
+                    a(href="/articles") Articles
+                li
+                    a(href="/about-me") About Me
+                li.pure-menu-selected
+                    a(href="/administer") Administer
+                li
+                    a(href="/customerManagementApp/wel.html") AngularDemo
+
+            button#save.pure-button.pure-button-primary SAVE
+        div
+            div.pure-u#nav
+            div.pure-u-1#content
+                form(action="/administer/articles",method="POST")
+                    input(id="nodeId",name="node",type="hidden")
+                    textarea(name="data")
+
+        script(src="/javascripts/elvis/administer.js")
+        |!{requireConfig + require("jquery","jqtree")}

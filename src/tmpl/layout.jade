@@ -1,0 +1,44 @@
+doctype 5
+html
+    head
+        title= locals.title
+        link(rel='stylesheet', href='/stylesheets/style.css')
+        link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+    body(data-spy="scroll",data-target="#left-nav")
+        header.navbar
+            div.navbar-inner
+                div.container
+                    a.brand Elvis
+                    ul.nav#main-nav(url=locals.url)
+                        li
+                            a(href="/")
+                                i.icon-home
+                                |home
+                        li
+                            a(href="/articles")
+                                i.icon-pencil
+                                |articles
+                        li
+                            a(href="/about-me")
+                                i.icon-user
+                                |about me
+                        li
+                            a(href="/administer")
+                                |administer
+                        li
+                            a(href="/customerManagementApp/wel.html")
+                                |angularDemo
+                        li
+                            a(href="/auth")
+                                |login
+                        li
+                            form.navbar-search(action="/search")
+                                input.search-query(type="text",style="margin: 0 auto;",
+                                    data-provide="typeahead",data-items="4",name="query",autocomplete="off",
+                                    data-source="[\"呵呵\",\"拗口\",\"awdawd\"]")
+        article.container
+            block content
+        script(src="/javascripts/modules/jquery-1.9.1.min.js")
+        script(src="/javascripts/modules/bootstrap.min.js")
+        script(src="/javascripts/elvis.js")
+        script(src="/javascripts/menu.js")

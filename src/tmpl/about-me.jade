@@ -1,0 +1,14 @@
+extends layout
+
+block content
+    div.tabbable
+        ul.nav.nav-tabs(rem)
+            li.active
+                a(href="#tab1",data-toggle="tab") Section 1
+            li
+                a(href="#tab2",data-toggle="tab") Section 2
+        div.tab-content
+            div.tab-pane.active#tab1(ajaxElm="/about-me/sec1")
+                p I'm in Section 1.
+            div.tab-pane#tab2(ajaxElm="/about-me/sec2")
+                p Howdy, I'm in Section 2.
