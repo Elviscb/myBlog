@@ -8,6 +8,7 @@ module.exports = function(grunt) {
     server_port: 5678,
     // clean directories
     clean: {
+      article: ['build/article'],
       build: ['build/'],
       tmp: ['tmp/']
     },
@@ -43,7 +44,7 @@ module.exports = function(grunt) {
       },
       article: {
         files: 'articles/mds/*.md',
-        tasks: ['article']
+        tasks: ['clean:article','article']
       },
       other: {
         files: ['src/img/**','src/public/**','src/javascripts/**','src/stylesheets/**'],
@@ -127,7 +128,7 @@ module.exports = function(grunt) {
   grunt.loadTasks('tasks'); // getWiki, docs tasks
   
   grunt.registerTask('build', ['clean', 'copy', 'jade', 'article']);
-  grunt.registerTask('default', ['build', 'less:production']);
+  grunt.registerTask('default', ['build', 'less:production', 'serve']);
   grunt.registerTask('dev', ['build', 'less:development', 'watch']);
   //grunt.registerTask('test', ['nodeunit']);
   grunt.registerTask('serve', ['server']);

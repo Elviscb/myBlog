@@ -28,7 +28,7 @@ module.exports = function (grunt) {
         // update server port for later use if needed
         grunt.config('server_port', port);
 
-        app.configure(function () {
+        app.configure(null,function () {
             grunt.log.ok(path.join(rootdir, 'src', 'tmpl'));
             app.set('port', port);
             app.set('views', path.join(rootdir, 'src', 'tmpl'));
@@ -43,7 +43,9 @@ module.exports = function (grunt) {
 //            }));
             app.use(express.static(path.join(rootdir, 'build')));
             app.use(function(req,res){
-                res.redirect("404.html");
+                read_file("build/404.html").then(function(data){
+                    res.end(data);
+                });
             });
             app.use(express.errorHandler({
                 dumpExceptions: false,

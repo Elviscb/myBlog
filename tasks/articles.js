@@ -3,7 +3,9 @@ module.exports = function (grunt) {
 
     'use strict';
 
-    var highlighter = require('highlight.js')
+    //libs
+    var fs = require("fs")
+        , highlighter = require('highlight.js')
         , marked = require('marked')
         , jade = require("jade")
         , read_file = require("./read_file")();
@@ -30,6 +32,7 @@ module.exports = function (grunt) {
         });
 
         var realPath = "articles/mds/"
+            , files = fs.readdirSync(realPath)
             , tmpl = "src/tmpl/article/article.jade"
             , locs
             , locsAll = []
@@ -40,38 +43,34 @@ module.exports = function (grunt) {
             locsAll.push("/" + locs.join("/"), locs.pop());
         }
 
-        read_file(realPath).then(function(files){
+        files.forEach(function (f) {
 
-            files.forEach(function(f){
-                read_file(realPath + f).then(function(data){
-                    locsAll[1] = f;
-                    try{
+            var data = grunt.file.read(realPath + f);
+            locsAll[1] = f;
+            try {
 
-                    data = jade.compile(grunt.file.read(tmpl),{filename:tmpl})
-                    ({
-                        url: "/articles",
-                        menus: files,
-                        locsAll: locsAll,
-                        article: {
-                            name: locsAll[1].replace(/\.[^.]*$/g,""),
-                            text: marked(data.toString()),
-                            code: marked("```markdown\n" + data.toString().replace(/\n```/g,tempReg) + "\n```")
-                                .replace(new RegExp(tempReg,"g"),"```")
-                        },
-                        title: f
-                    });
+                data = jade.compile(grunt.file.read(tmpl), {filename: tmpl})
+                ({
+                    url: "/articles",
+                    menus: files,
+                    locsAll: locsAll,
+                    article: {
+                        name: locsAll[1].replace(/\.[^.]*$/g, ""),
+                        text: marked(data.toString()),
+                        code: marked("```markdown\n" + data.toString().replace(/\n```/g, tempReg) + "\n```")
+                            .replace(new RegExp(tempReg, "g"), "```")
+                    },
+                    title: f
+                });
 
-                    }catch(e){
-                        grunt.log.error(e);
-                    }
-                    grunt.log.ok(realPath+f);
-                    grunt.log.ok(data.substring(0,10));
-                    grunt.file.write("build/"+realPath+ f.replace(".md",".html"),data);
-                })
-            });
+            } catch (e) {
+                grunt.log.error(e);
+            }
+            grunt.log.ok(realPath + f);
+            grunt.log.ok(data.substring(0, 10));
+            grunt.file.write("build/" + realPath + f.replace(".md", ".html"), data);
 
         });
-
 
     });
 

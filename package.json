@@ -3,7 +3,7 @@
     "version": "0.0.1",
     "private": true,
     "scripts": {
-        "start": "grunt server"
+        "start": "grunt"
     },
     "dependencies": {
         "grunt": "~0.4.1",
@@ -19,7 +19,8 @@
         "jade": "~0.35.0",
         "marked": "0.2.9",
 		"q": "0.9.6",
-		"highlight.js": "~7.3.0"
+		"highlight.js": "~7.3.0",
+        "underscore": "1.5.1"
     },
     "devDependencies": {
         "grunt-contrib-watch": "~0.5.2",
