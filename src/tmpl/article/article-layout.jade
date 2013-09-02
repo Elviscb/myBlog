@@ -11,6 +11,9 @@ block content
                     span #{locsAll[i--]}
         - }
     h2.page-header #{article.name}
+    div(style="margin: -25px 0 20px;")
+        i.icon-download
+        a(href="/download/#{article.name}.md") RAW&Download...
     div.row
         div.span3
             div#left-nav(data-offset-top="160",style="width:258px;top:22px;")
@@ -29,17 +32,17 @@ block content
                                 a(href="#{v}") #{v}
                                     i.icon-chevron-right.pull-right
         div.span9
-            div
-                ul#article-inner-nav.nav.nav-tabs
-                    li.active
-                        a(href="#tab1",data-toggle="tab") 文字
-                    li
-                        a(href="#tab2",data-toggle="tab",style="margin-right:0") 代码
-                div.tab-content(style="clear:both")
-                    div.tab-pane.active#tab1
-                        p !{article.text}
-                    div.tab-pane#tab2
-                        p !{article.code}
+            div !{article.text}
+                //ul#article-inner-nav.nav.nav-tabs
+                //    li.active
+                //        a(href="#tab1",data-toggle="tab") 文字
+                //    li
+                //        a(href="#tab2",data-toggle="tab",style="margin-right:0") 代码
+                //div.tab-content(style="clear:both")
+                //    div.tab-pane.active#tab1
+                //        p !{article.text}
+                //    div.tab-pane#tab2
+                //        p !{article.code}
                 block article
     link(rel="stylesheet",href="/stylesheets/obsidian.css")
     //script(src="/syntaxhighlighter/scripts/shCore.js")

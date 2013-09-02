@@ -5,6 +5,7 @@ module.exports = function (grunt) {
     var express = require('express')
       , http = require('http')
       , marked = require('marked')
+      , fs = require("fs")
       , url = require('url')
       , path = require("path")
       , read_file = require("./read_file")();
@@ -28,7 +29,7 @@ module.exports = function (grunt) {
         // update server port for later use if needed
         grunt.config('server_port', port);
 
-        app.configure(null,function () {
+        app.configure(function () {
             grunt.log.ok(path.join(rootdir, 'src', 'tmpl'));
             app.set('port', port);
             app.set('views', path.join(rootdir, 'src', 'tmpl'));
@@ -43,8 +44,7 @@ module.exports = function (grunt) {
 //            }));
             app.use(express.static(path.join(rootdir, 'build')));
             app.use(function(req,res){
-                read_file("build/404.html").then(function(data){
-                    res.end(data);
+                res.render("404",{
                 });
             });
             app.use(express.errorHandler({
@@ -81,6 +81,19 @@ module.exports = function (grunt) {
                 url: "/about-me"
             });
         });
+
+        app.get("/download/:name.md", function (req, res, next) {
+            var realPath = "articles/mds/" + req.params.name + ".md"
+              , exist = fs.existsSync(realPath);
+
+            if(!exist) next();
+
+            else {
+                res.setHeader("Content-Type","text/x-markdown");
+                res.setHeader("Content-length", fs.statSync(realPath).size);
+                fs.createReadStream(realPath).pipe(res);
+            }
+        })
 
         //articles
         app.get("/articles*", function (req, res, next) {

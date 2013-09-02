@@ -62,7 +62,7 @@ module.exports = function(grunt) {
           }
         },
         files: {
-          "build/404.html": "src/tmpl/404.jade"
+          //"build/404.html": "src/tmpl/404.jade"
         }
       }
     },

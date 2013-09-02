@@ -52,7 +52,7 @@ module.exports = function (grunt) {
                 data = jade.compile(grunt.file.read(tmpl), {filename: tmpl})
                 ({
                     url: "/articles",
-                    menus: files,
+                    menus: files.slice(0,10),
                     locsAll: locsAll,
                     article: {
                         name: locsAll[1].replace(/\.[^.]*$/g, ""),
@@ -65,6 +65,7 @@ module.exports = function (grunt) {
 
             } catch (e) {
                 grunt.log.error(e);
+                return;
             }
             grunt.log.ok(realPath + f);
             grunt.log.ok(data.substring(0, 10));
