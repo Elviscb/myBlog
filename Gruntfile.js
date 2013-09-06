@@ -34,22 +34,29 @@ module.exports = function(grunt) {
     },
 
     watch: {
-      static: {
-        files: 'src/less/*.less',
-        tasks: ['less:development']
-      },
-      less: {
-        files: 'src/less/*.less',
-        tasks: ['less:development']
-      },
-      article: {
-        files: 'articles/mds/*.md',
-        tasks: ['clean:article','article']
-      },
-      other: {
-        files: ['src/img/**','src/public/**','src/javascripts/**','src/stylesheets/**'],
-        tasks: ['copy']
-      }
+//      static: {
+//        files: 'src/less/*.less',
+//        tasks: ['less:development']
+//      },
+//      less: {
+//        files: 'src/less/*.less',
+//        tasks: ['less:development']
+//      },
+//      article: {
+//        files: 'articles/mds/*.md',
+//        tasks: ['clean:article','article']
+//      },
+
+        assets: {
+            files: ['app/modules/*/public/**','app/public/**','src/**'],
+            tasks: ['copy:assets']
+        },
+
+        root: {
+            files: ['app/model/*/tmpl/*','app/modules/*/tmpl/*','app/tmpl/*'],
+            tasks: ['copy:root']
+        }
+
     },
 
     // compile page layouts
@@ -101,12 +108,16 @@ module.exports = function(grunt) {
     copy: {
       assets: {
         files: [
-          {expand: true, cwd: 'src/', src: ['img/**', 'stylesheets/**','public/**','javascripts/**'], dest: 'build/'}
+            {expand: true, cwd: 'src/', src: ['**'], dest: 'build/public'},
+            {expand: true, flatten:true, cwd: 'app/modules', src: ['*/public/**'], dest: 'build/public'},
+            {expand: true, flatten:true, cwd: 'app/public', src: ['**'], dest: 'build/public'}
         ]
       },
       root: {
         files: [
-          {expand: true, cwd: 'src/', src: ['*'], dest: 'build/', filter: 'isFile'}
+            {expand: true, flatten:true, cwd: 'app/tmpl', src: ['*'], dest: 'build/local'},
+            {expand: true, flatten:true, cwd: 'app/model', src: ['*/tmpl/*'], dest: 'build/local'},
+            {expand: true, flatten:true, cwd: 'app/modules', src: ['*/tmpl/*'], dest: 'build/local'}
         ]
       }
     },
@@ -127,9 +138,9 @@ module.exports = function(grunt) {
   // Load local tasks
   grunt.loadTasks('tasks'); // getWiki, docs tasks
   
-  grunt.registerTask('build', ['clean', 'copy', 'jade', 'article']);
-  grunt.registerTask('default', ['build', 'less:production', 'serve']);
-  grunt.registerTask('dev', ['build', 'less:development', 'watch']);
+  grunt.registerTask('build', ['clean', 'copy', 'jade']);
+  grunt.registerTask('default', ['build', 'serve']);
+  grunt.registerTask('dev', ['build', 'watch']);
   //grunt.registerTask('test', ['nodeunit']);
   grunt.registerTask('serve', ['server']);
 };

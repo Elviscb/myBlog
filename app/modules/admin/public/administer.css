@@ -1,0 +1,154 @@
+article.container{
+    position: absolute;
+    top: 80px;
+    bottom: 30px;
+}
+
+#topNav{
+}
+
+#topNav #save{
+    float: right;
+    margin-right: 10px;
+}
+
+#nav{
+}
+
+#nav #leftheader{
+    border-left: 2px solid;
+    background: #DDD;
+    padding: 8px;
+}
+
+#nav #wrapper{
+    position: absolute;
+    overflow: hidden;
+    width: 23.076923076923077%;
+    top: 46px;
+    bottom: 0px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+#nav #wrapper ol{
+    margin: 0;
+    top: 0;
+    bottom: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+#nav #wrapper li{
+    background-color: white;
+}
+
+#nav li small{
+    color: #999;
+}
+
+#nav li a{
+    display: block;
+    border-right: 4px solid transparent;
+    padding: 5px 10px;
+    word-wrap: break-word;
+    margin-right: 16px;
+    text-decoration: none;
+}
+
+#nav li a.active{
+    position: relative;
+    border-color: #363636;
+    background: whitesmoke;
+}
+
+#nav li a i{
+    position: absolute;
+    top: 0;
+    right: -17px;
+}
+
+#nav li a.active i{
+    display: block;
+}
+
+.b-flag{
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    color: #999;
+    font-size: 12px;
+    padding: 0 5px;
+    margin-left: 10px;
+    position: relative;
+    top: -12px;
+}
+
+.b-flag i.icon-ok{
+    display: none;
+}
+
+.b-flag.ok{
+    border-color: #3FC500;
+    color: #328A00;
+    background: #E6FFE0;
+}
+
+.b-flag.ok i.icon-ok{
+    display: inline-block;
+}
+
+#bodyAddon{
+
+}
+
+#save{
+    margin-left: 10px;
+}
+form input[name="title"]{
+    width: 409px;
+}
+.CodeMirror{
+    border: 1px solid #CCC;
+    border-radius: 5px;
+    position: absolute !important;
+    top: 110px;
+    bottom: 10px;
+    height: auto !important;
+    width: 422px;
+}
+
+#preview{
+    background: #666;
+    color: #FFF;
+    padding: 5px 10px;
+}
+
+#viewer{
+    position: absolute;
+    bottom: 0;
+    top: 30px;
+    width: 36.15%;
+}
+
+#viewer .pane{
+    left:0
+}
+
+#viewer .content{
+    padding-left: 20px;
+}
+
+iframe{
+    border: 0;
+    position: absolute;
+    width: 870px;
+    height: 100%;
+}
+
+footer{
+    padding: 5px 10px;
+    position: absolute;
+    bottom: 0;
+}

@@ -1,0 +1,51 @@
+doctype 5
+html
+    block head
+        head
+            title= locals.title
+            link(rel='stylesheet', href='/style.css')
+            link(rel='stylesheet', href='/bootstrap/bootstrap.min.css')
+            script(src="/jquery/jquery.js")
+    body(data-spy="scroll",data-target="#left-nav")
+        header.navbar
+            div.navbar-inner
+                div.container
+                    a.brand Elvis
+                    ul.nav#main-nav(url=locals.req.path.match(new RegExp("\/[^/]*")))
+                        li
+                            a(href="/")
+                                i.icon-home
+                                |home
+                        li
+                            a(href="/blog")
+                                i.icon-pencil
+                                |blog
+                        li
+                            a(href="/about-me")
+                                i.icon-user
+                                |about me
+                        li
+                            a(href="/administer")
+                                |administer
+                        li
+                            a(href="/public/customerManagementApp/wel.html")
+                                |angularDemo
+                        li
+                            a(href="/auth")
+                                |login
+                        li
+                            form.navbar-search(action="/search")
+                                input.search-query(type="text",style="margin: 0 auto;",
+                                    data-provide="typeahead",data-items="4",name="query",autocomplete="off",
+                                    data-source="[\"呵呵\",\"拗口\",\"awdawd\"]")
+        article.container
+            block content
+        footer.container
+            a(href="http://www.nodejs.org",target="_blank") nodejs
+            |&
+            a(href="http://expressjs.com",target="_blank") express
+            |&
+            a(href="http://gruntjs.com",target="_blank") grunt
+        script(src="/bootstrap/bootstrap.min.js")
+        script(src="/elvis.js")
+        script(src="/menu.js")

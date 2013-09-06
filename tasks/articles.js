@@ -8,8 +8,9 @@ module.exports = function (grunt) {
         , highlighter = require('highlight.js')
         , marked = require('marked')
         , jade = require("jade")
-        , read_file = require("./read_file")();
+        , read_file = require("./../app/read_file")();
 
+    /*
     grunt.registerTask('article', 'compile articles', function () {
         grunt.log.ok('Generating articles...');
 
@@ -33,7 +34,7 @@ module.exports = function (grunt) {
 
         var realPath = "articles/mds/"
             , files = fs.readdirSync(realPath)
-            , tmpl = "src/tmpl/article/article.jade"
+            , tmpl = "src/tmpl/blog/blog.jade"
             , locs
             , locsAll = []
             , tempReg = "G4q9QxkP4Lfe3S";
@@ -74,5 +75,6 @@ module.exports = function (grunt) {
         });
 
     });
+    */
 
 }
