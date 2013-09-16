@@ -6,8 +6,8 @@
  */
 
 require("cf-autoconfig");
-require("mongodb").connect('');
-var mongoose = require('mongoose-q')(require('mongoose'));
+var mongodb = require("mongodb").connect('')
+  , mongoose = require('mongoose-q')(require('mongoose'));
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
