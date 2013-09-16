@@ -4,8 +4,9 @@
 
     console.log("sup");
 
+    //每两秒刷新滚动条
     setInterval(function(){
-        $("#wrapper").nanoScroller();
+        $("#wrapper, #viewer").nanoScroller();
     },2000);
 
     marked.setOptions({
@@ -17,12 +18,11 @@
 
     var app = angular.module("admin", ['ngResource']);
 
-    $("#viewer").nanoScroller();
-
     app.factory("Blog", ["$resource", function($resource){
 
-        var Blog = $resource('/blog/:id.json',{id:""},{
-            query: {method: "GET", isArray:false}
+        var Blog = $resource('/blog/:id.json',{id:"@_id"},{
+            query: {method: "GET", isArray:false},
+            update: {method: "PUT"}
         });
 
         return Blog;
@@ -31,7 +31,6 @@
 
     app.directive('codeMirror', function() {
         return function(scope, element, attrs) {
-            console.log(element[0]);
             scope.callback(CodeMirror.fromTextArea(element[0],{
                 lineWrapping: false,
                 theme: "default",
@@ -52,11 +51,23 @@
 
     app.controller("blogsController", ["$scope", "$rootScope", "Blog", function($scope, $rootScope, Blog){
 
-        $scope.query = function(){
+        $rootScope.query = function(){
             Blog.query().$then(function(data){
                 $rootScope.blogs = data.data.blogs;
                 $("#wrapper").nanoScroller();
             });
+        }
+
+        $scope.del = function(id){
+            confirm("删除?") ? new Blog({_id:id}).$delete(function(q, resh){
+                q.$then(function(r){
+                    $rootScope.query();
+                    $rootScope.new_();
+                    alert("已删除");
+                },function(err){
+                    alert(err);
+                })
+            }) : null;
         }
 
         $scope.format = function(date){
@@ -64,11 +75,11 @@
             return date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()+" "+date.toTimeString().substring(0,8);
         }
 
-        $scope.query();
+        $rootScope.query();
 
     }]);
 
-    app.controller("blogController", ["$scope", "$rootScope", "$routeParams", function($scope,$rootScope,$routeParams){
+    app.controller("blogController", ["$scope", "$rootScope", "$routeParams", "Blog", function($scope,$rootScope,$routeParams,Blog){
 
         $scope.marked = marked;
         $scope.save = function(){
@@ -76,24 +87,34 @@
                 return alert("没有标题");
             if(!$rootScope.cBlog.body)
                 return alert("没有内容");
-            $.ajax({
-                type : $rootScope.cBlog ? "POST" : "PUT",
-                url: $rootScope.cBlog ? "/blog/" + $rootScope.cBlog._id : "/blog",
-                data: $rootScope.cBlog
-            }).complete(function(data){
-                alert(data.responseText);
+
+            new Blog($rootScope.cBlog)[$rootScope.cBlog._id?"$update":"$save"](function(p, res){
+                p.$then(function(r){
+                    $rootScope.query();
+                    alert("已保存");
+                },function(err){
+                    alert(err);
+                });
             });
+
+//            $.ajax({
+//                type : $rootScope.cBlog ? "POST" : "PUT",
+//                url: $rootScope.cBlog._id ? "/blog/" + $rootScope.cBlog._id : "/blog",
+//                data: $rootScope.cBlog
+//            }).complete(function(data){
+//                alert(data.responseText);
+//            });
         };
 
         $scope.callback = function(editor){
 
             $scope.editor = editor;
 
-            $scope.new_ = function(){
-                $rootScope.cBlog = {
+            $rootScope.new_ = function(){
+                $rootScope.cBlog = ({
                     title: "",
                     body: ""
-                };
+                });
                 editor.setValue("");
             };
 
@@ -108,7 +129,7 @@
 
             ($rootScope.cBlog = _.find($rootScope.blogs, function(v){
                 return v._id == $routeParams.id;
-            })) || $scope.new_();
+            })) || $rootScope.new_();
 
             editor.setValue($rootScope.cBlog.body);
         };

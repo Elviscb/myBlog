@@ -23,14 +23,18 @@ module.exports = function (grunt) {
         this.async();
 
         var app = express()
-          , rootdir = path.join(__dirname, "..");
+          , rootdir = path.join(__dirname, "..")
+          , config = {
+                port: process.env.PORT||3000
+            };
 
-        var port = process.env.PORT || grunt.config.get('server_port');
-        // update server port for later use if needed
-        grunt.config('server_port', port);
+        process.argv.forEach(function(v, i, a){
+            var ev = v.split("=");
+            config[ev[0]] = ev[1] || "";
+        });
 
         app.configure(function () {
-            app.set('port', port);
+            app.set('port', config.port);
             app.set('views', path.join(rootdir, 'build', 'local'));
             app.set('view engine', 'jade');
             app.use(express.static(path.join(rootdir, 'build', 'public')));
@@ -92,6 +96,18 @@ module.exports = function (grunt) {
             res.render('about-me-sec2');
         });
 
+        app.get("/download/:name.md", function (req, res, next) {
+
+            BlogResource.Blog.findOneQ({title: req.params.name}).then(function(data){
+                if(!data._id) return next();
+                res.setHeader("Content-Type", "text/x-markdown");
+                res.end(data.body);
+            }).fail(function(err){
+                next(err);
+            });
+
+        })
+
         //admin
         require("./../app/modules/admin")(app);
 
@@ -105,8 +121,8 @@ module.exports = function (grunt) {
             }));
         });
 
-        http.createServer(app).listen(port, function () {
-            console.log("Express server listening on port " + port);
+        http.createServer(app).listen(config.port, function () {
+            console.log("Express server listening on port " + config.port);
         });
 
     });

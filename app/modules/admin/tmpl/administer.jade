@@ -19,7 +19,7 @@ block content
                             span(data-ng-bind="v.title")
                             br
                             small(data-ng-bind="'- '+format(v.date)")
-                            i.icon-play
+                        span(data-ng-click="del(v._id)").pull-right ✖
 
         div.span9.container(data-ng-view)
 

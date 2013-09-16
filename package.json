@@ -1,10 +1,14 @@
 {
-    "name": "application-name",
+    "name": "elvis",
     "version": "0.0.1",
     "private": true,
     "scripts": {
-        "start": "grunt"
+        "start": "node_modules/.bin/grunt"
     },
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/elivs/myblog.git"
+	},
     "dependencies": {
         "grunt": "~0.4.1",
         "grunt-cli": "~0.1.x",

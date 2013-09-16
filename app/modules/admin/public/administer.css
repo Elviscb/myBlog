@@ -1,6 +1,6 @@
 article.container{
     position: absolute;
-    top: 80px;
+    top: 60px;
     bottom: 30px;
 }
 
@@ -10,6 +10,10 @@ article.container{
 #topNav #save{
     float: right;
     margin-right: 10px;
+}
+
+.pane{
+    left:0
 }
 
 #nav{
@@ -36,6 +40,7 @@ article.container{
     margin: 0;
     top: 0;
     bottom: 0;
+    padding-left: 40px;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -49,12 +54,17 @@ article.container{
     color: #999;
 }
 
+#nav li > span{
+    margin: -24px 0 0 0;
+    padding: 0px 10px;
+    position: relative;
+}
+
 #nav li a{
     display: block;
-    border-right: 4px solid transparent;
+    border-left: 4px solid transparent;
     padding: 5px 10px;
     word-wrap: break-word;
-    margin-right: 16px;
     text-decoration: none;
 }
 
@@ -62,16 +72,6 @@ article.container{
     position: relative;
     border-color: #363636;
     background: whitesmoke;
-}
-
-#nav li a i{
-    position: absolute;
-    top: 0;
-    right: -17px;
-}
-
-#nav li a.active i{
-    display: block;
 }
 
 .b-flag{
@@ -132,10 +132,6 @@ form input[name="title"]{
     width: 36.15%;
 }
 
-#viewer .pane{
-    left:0
-}
-
 #viewer .content{
     padding-left: 20px;
 }
@@ -149,6 +145,8 @@ iframe{
 
 footer{
     padding: 5px 10px;
+    width: 100%;
     position: absolute;
     bottom: 0;
+    box-sizing: border-box;
 }

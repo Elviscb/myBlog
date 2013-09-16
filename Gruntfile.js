@@ -139,7 +139,7 @@ module.exports = function(grunt) {
   grunt.loadTasks('tasks'); // getWiki, docs tasks
   
   grunt.registerTask('build', ['clean', 'copy', 'jade']);
-  grunt.registerTask('default', ['build', 'serve']);
+  grunt.registerTask('default', ['build', 'server']);
   grunt.registerTask('dev', ['build', 'watch']);
   //grunt.registerTask('test', ['nodeunit']);
   grunt.registerTask('serve', ['server']);

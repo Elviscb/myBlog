@@ -8,6 +8,7 @@
 var mongoose = require('./../mongoose-connection')
   , Q = require("q")
   , _ = require("underscore")
+  , formatCreator = require("./../formatCreator")
 
   , blogSchema = mongoose.Schema({
         title:  String,
@@ -26,60 +27,40 @@ var mongoose = require('./../mongoose-connection')
 
 exports.Blog = Blog;
 
-exports.index = (function(req, res, next){
-    function exec(req, res, next, callback){
-        var pager = require("./../../pager.js")
-            (req.params.page, req.params.count);
+exports.index = formatCreator.Q(function(req, res, next, callback){
 
-        var qu = Blog.find().sort("-date").skip(pager.count * (pager.page-1)).limit(pager.count);
+    var pager = require("./../../pager.js")
+        (req.params.page, req.params.count);
 
-        Q.all([
-            qu.execQ(),
-            qu.countQ()
-        ]).spread(function(data, total){
-            callback({
-                blogs: data,
-                pager: pager.setTotal(total)
-            });
-        }).fail(function(err){
-            next(err);
+    var qu = Blog.find().sort("-date").skip(pager.count * (pager.page-1)).limit(pager.count);
+
+    return Q.all([
+        qu.execQ(),
+        qu.countQ()
+    ]).spread(function(data, total){
+        callback({
+            blogs: data,
+            pager: pager.setTotal(total)
         });
-    };
+    });
 
-    return {
-        json: function(req, res, next){
-            exec(req, res, next, function(data){
-                res.json(data);
-            });
-        },
-        html: function(req, res, next){
-            exec(req, res, next, function(data){
-                res.render("list", data);
-            });
-        },
-        default: function(req, res, next){
-            this.html(req, res, next);
-        }
-    }
-}).call(this);
+}, "list");
 
 exports.new = function(req, res){
     res.send('new blog');
 };
 
-exports.create = function(req, res, next){
+exports.create = formatCreator(function(req, res, next, call){
 
     if(!req.body.title)
-        res.end("title can't be empty");
+        call(400, "title can't be empty");
     else new Blog(_.extend(req.body,{
         author:"elvis"
-    })).save(function(err, data){
-        err ? next(err) : res.end('create blog!id:' + data._id.toString());
-    });
+    })).save(call);
 
-};
+});
 
-exports.show = function(req, res, next){
+exports.show = formatCreator.Q(function(req, res, next, call){
     var highlighter = require('highlight.js')
         , marked = require('marked')
         , tempReg = "G4q9QxkP4Lfe3S";
@@ -103,13 +84,13 @@ exports.show = function(req, res, next){
     });
 
     //find blog & 10 latest blog
-    Q.all([
+    return Q.all([
             Blog.findByIdQ(req.params.blog),
             Blog.find().sort("-date").limit(10).execQ()
         ]).spread(function (blog, blogs) {
 
             !blog._id ? next() :
-                res.render("blog", {
+                call({
                     menus: blogs,
                     locsAll: ["", blog.title, "/blog", "blog"],
                     blog: {
@@ -122,29 +103,22 @@ exports.show = function(req, res, next){
                     title: blog.title
                 });
 
-        }).fail(function (err) {
-            console.log(err);
-            next(err);
         });
-};
+}, "blog");
 
 exports.edit = function(req, res){
     res.send('edit blog ' + req.params.blog);
 };
 
-exports.update = function(req, res, next){
+exports.update = formatCreator.Q(function(req, res, next, call){
 
-    Blog.findOneAndUpdateQ({_id:req.body._id},{
+    return Blog.findOneAndUpdateQ({_id:req.body._id},{
         title: req.body.title,
         body: req.body.body
-    }).then(function(data){
-        res.end('update blog ' + data._id.toString());
-    },function(err){
-        next(err);
-    });
+    }).then(call);
 
-};
+});
 
-exports.destroy = function(req, res){
-    res.send('destroy blog ' + req.params.blog);
-};
+exports.destroy = formatCreator.Q(function(req, res, next, call){
+    return Blog.findByIdAndRemoveQ(req.params.blog).then(call);
+});
