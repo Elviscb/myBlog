@@ -5,6 +5,7 @@
  * Time: 下午2:45
  */
 
+require("cf-autoconfig");
 var mongoose = require('mongoose-q')(require('mongoose'));
 
 mongoose.connect('');
