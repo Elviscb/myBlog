@@ -10,6 +10,7 @@
 		"url": "https://github.com/elivs/myblog.git"
 	},
     "dependencies": {
+        "cf-autoconfig": "*",
         "grunt": "~0.4.1",
         "grunt-cli": "~0.1.x",
         "grunt-contrib-clean": "~0.4.1",
