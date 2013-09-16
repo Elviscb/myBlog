@@ -5,9 +5,9 @@
  * Time: 下午2:45
  */
 
-require("cf-autoconfig");
-var mongodb = require("mongodb").connect('')
-  , mongoose = require('mongoose-q')(require('mongoose'));
+var mongoose = require('mongoose-q')(require('mongoose'));
+
+mongoose.connect(process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/myblog');
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
