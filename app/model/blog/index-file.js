@@ -11,7 +11,7 @@ var Q = require("q")
   , formatCreator = require("./../formatCreator")
 
     //blogs location
-  , blogsPath = __dirname + "../../../../blogs/"
+  , blogsPath = __dirname.replace(/app[\\/]model[\\/]blog/, "blogs/")
 
     //find all blogs and cached (based on q)
   , _blogs = (function(){
@@ -186,6 +186,8 @@ var Q = require("q")
 
 //refresh blogs every 5 minute
 setInterval(_blogs.refresh, 1000 * 60 * 5);
+
+console.log(blogsPath);
 
 exports.Blog = Blog;
 
