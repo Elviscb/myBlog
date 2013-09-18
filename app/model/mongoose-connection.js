@@ -7,7 +7,7 @@
 
 var mongoose = require('mongoose-q')(require('mongoose'));
 
-mongoose.connect(process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/myblog');
+mongoose.connect(process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/mydb')
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));

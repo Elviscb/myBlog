@@ -13,7 +13,7 @@ block content
     h2.page-header #{blog.name}
     div(style="margin: -25px 0 20px;")
         i.icon-download
-        a(href="/download/#{blog.name}.md") RAW&Download...
+        a(href="/download/#{blog._id}.md") RAW&Download...
     div.row
         div.span3
             div#left-nav(data-offset-top="160",style="width:258px;top:22px;")
@@ -31,7 +31,7 @@ block content
                             li
                                 a(href="/blog/#{v._id}") #{v.title}
                                     i.icon-chevron-right.pull-right
-        div.span9
+        div.span9#art
             div !{blog.text}
                 //ul#blog-inner-nav.nav.nav-tabs
                 //    li.active

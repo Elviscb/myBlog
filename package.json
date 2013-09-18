@@ -1,39 +1,39 @@
 {
-    "name": "elvis",
-    "version": "0.0.1",
-    "private": true,
-    "scripts": {
-        "start": "node_modules/.bin/grunt"
-    },
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/elivs/myblog.git"
-	},
-    "dependencies": {
-        "cf-autoconfig": "*",
-        "grunt": "~0.4.1",
-        "grunt-cli": "~0.1.x",
-        "grunt-contrib-clean": "~0.4.1",
-        "grunt-contrib-concat": "~0.2.0",
-        "grunt-contrib-copy": "~0.4.1",
-        "grunt-contrib-less": "~0.5.0",
-        "grunt-contrib-jade": "~0.5.0",
-        "mime": "*",
-        "mkdirp": "*",
-        "express": "3.2.0",
-        "express-params": "0.0.3",
-        "express-resource": "1.0.0",
-        "jade": "~0.35.0",
-        "marked": "0.2.9",
-		"q": "0.9.6",
-		"highlight.js": "~7.3.0",
-        "underscore": "1.5.1",
-        "mongoose": "3.6.15",
-        "mongoose-q": "0.0.4"
-    },
-    "devDependencies": {
-        "grunt-contrib-watch": "~0.5.2",
-        "grunt-contrib-jshint": "~0.1.1",
-        "grunt-contrib-nodeunit": "~0.2.0"
-    }
+  "name": "elvis",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/.bin/grunt"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/elivs/myblog.git"
+  },
+  "dependencies": {
+    "cf-autoconfig": "*",
+    "grunt": "~0.4.1",
+    "grunt-cli": "~0.1.x",
+    "grunt-contrib-clean": "~0.4.1",
+    "grunt-contrib-concat": "~0.2.0",
+    "grunt-contrib-copy": "~0.4.1",
+    "grunt-contrib-less": "~0.5.0",
+    "grunt-contrib-jade": "~0.5.0",
+    "mime": "*",
+    "mkdirp": "*",
+    "express": "3.2.0",
+    "express-params": "0.0.3",
+    "express-resource": "1.0.0",
+    "jade": "~0.35.0",
+    "marked": "0.2.9",
+    "q": "0.9.6",
+    "highlight.js": "~7.3.0",
+    "underscore": "1.5.1",
+    "mongoose": "3.6.15",
+    "mongoose-q": "0.0.4"
+  },
+  "devDependencies": {
+    "grunt-contrib-watch": "~0.5.2",
+    "grunt-contrib-jshint": "~0.1.1",
+    "grunt-contrib-nodeunit": "~0.2.0"
+  }
 }

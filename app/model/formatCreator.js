@@ -3,7 +3,6 @@
  * User: Administrator
  * Date: 13-9-10
  * Time: 上午11:51
- * To change this template use File | Settings | File Templates.
  */
 
 var _ = require("underscore");
@@ -26,9 +25,10 @@ module.exports = function _r(exec, opt){
         },
         html: function(req, res, next){
             exec(req, res, next, function(err, data){
-                if(_.isNumber(err))
-                    res.status(err).render(opt, data);
-                else if(err) next(err);
+                if(_.isNumber(err)){
+                    res.status(err);
+                    next(data);
+                }else if(err) next(err);
                 else res.render(opt.html, data);
             });
         },
@@ -52,6 +52,7 @@ module.exports.Q = function(exec, opt){
             exec(req, res, next, function(data){
                 res.json(data);
             }).fail(function(err){
+                console.log(err);
                 next(err);
             });
         },
@@ -59,6 +60,7 @@ module.exports.Q = function(exec, opt){
             exec(req, res, next, function(data){
                 res.render(opt.html, data);
             }).fail(function(err){
+                console.log(err);
                 next(err);
             });
         },

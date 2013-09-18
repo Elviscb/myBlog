@@ -11,9 +11,9 @@ div.row-fluid
                         span#bodyAddon.b-flag(data-ng-class="{ok:!!cBlog.body}")
                             i.icon-ok
                             |body
-                    button#save.pull-right.btn.btn-primary(data-ng-click="save()") SAVE
-                    button.pull-right.btn(data-ng-click="new_()") NEW
-                input(data-ng-model="cBlog.title",name="title",type="text",placeholder="title",value="{{cBlog.title}}")
+                    button#save.pull-right.button.button-rounded.button-flat-action(data-ng-click="save()") SAVE
+                    button.pull-right.button.button-rounded.button-flat-primary(data-ng-click="new_()") NEW
+                input(data-ng-model="cBlog.title",name="title",type="text",placeholder="title")
                 textarea(data-ng-model="cBlog.body",code-mirror,name="body")
     div.span6
         div#preview Preview

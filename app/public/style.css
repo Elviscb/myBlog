@@ -1,5 +1,6 @@
 body {
-    padding: 40px 0px 0;
+    background-color: #f9f9f9 !important;
+    padding: 40px 0px 0px;
 }
 
 a {
@@ -17,8 +18,8 @@ h2#title {
 #left-nav ul li a{
     padding: 10px 0 10px 0px;
     margin: 5px 15px;
-    border-bottom: 1px solid #dddddd;
-    background-color: #FFFFFF;
+    border-bottom: 1px solid #EEE;
+    background-color: #F9F9F9;
 }
 
 #left-nav ul li a:hover i{
@@ -45,7 +46,29 @@ h2#title {
 ul.breadcrumb.pull-right {
     font-size: 14px;
     margin: 50px 0 0;
-    background: #ffffff;
+    background: #F9F9F9;
+}
+
+#main{
+    min-height: 400px;
+}
+.span9#art{
+    min-height: 270px;
+    margin-bottom: 30px;
+    background: #FFF;
+    box-shadow: 0 0 3px #F1F1F1;
+    box-sizing: border-box;
+    padding: 10px;
+}
+@media (min-height: 500px)
+{
+    #main{
+        min-height: 580px;
+    }
+    .span9#art{
+        min-height: 450px;
+    }
+
 }
 
 i[class*="icon-"]{
@@ -56,5 +79,14 @@ i[class*="icon-"]{
 footer{
     text-align: right;
     padding: 10px;
-    background: #F3F2F2;
+    background: #444;
+    color: #FFF;
+}
+
+footer a{
+    color: #BEE0FF;
+}
+
+footer a:hover, footer a:visited{
+    color: #D6C19C;
 }

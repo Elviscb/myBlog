@@ -67,8 +67,10 @@ module.exports = function (grunt) {
         });
 
         //param
+        /*
         require('express-params').extend(app);
         app.param("blog", /^[0-9a-f]{24}$/i);
+        */
 
         //restful
         app.resource('blog', BlogResource);
@@ -98,7 +100,7 @@ module.exports = function (grunt) {
 
         app.get("/download/:name.md", function (req, res, next) {
 
-            BlogResource.Blog.findOneQ({title: req.params.name}).then(function(data){
+            BlogResource.Blog.findOneQ({_id: req.params.name}).then(function(data){
                 if(!data._id) return next();
                 res.setHeader("Content-Type", "text/x-markdown");
                 res.end(data.body);
