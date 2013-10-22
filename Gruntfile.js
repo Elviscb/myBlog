@@ -140,7 +140,7 @@ module.exports = function(grunt) {
   
   grunt.registerTask('build', ['clean', 'copy', 'jade']);
   grunt.registerTask('default', ['build', 'server']);
-  grunt.registerTask('dev', ['build', 'watch']);
+  grunt.registerTask('dev', ['build', 'server']);
   //grunt.registerTask('test', ['nodeunit']);
   grunt.registerTask('serve', ['server']);
 };

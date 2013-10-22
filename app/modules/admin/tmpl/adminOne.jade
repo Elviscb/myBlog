@@ -3,19 +3,14 @@ div.row-fluid
         form
             input(name="_id",type="hidden",value="{{cBlog._id}}")
             fieldset
-                legend#legend
-                    span blog
-                        span#titleAddon.b-flag(data-ng-class="{ok:!!cBlog.title}")
-                            i.icon-ok
-                            |title
-                        span#bodyAddon.b-flag(data-ng-class="{ok:!!cBlog.body}")
-                            i.icon-ok
-                            |body
-                    button#save.pull-right.button.button-rounded.button-flat-action(data-ng-click="save()") SAVE
-                    button.pull-right.button.button-rounded.button-flat-primary(data-ng-click="new_()") NEW
-                input(data-ng-model="cBlog.title",name="title",type="text",placeholder="title")
                 textarea(data-ng-model="cBlog.body",code-mirror,name="body")
     div.span6
         div#preview Preview
+            span#titleAddon.b-flag(data-ng-class="{ok:!!cBlog.title}")
+                i.icon-ok
+                |title
+            span#bodyAddon.b-flag(data-ng-class="{ok:!!cBlog.body}")
+                i.icon-ok
+                |body
         div#viewer.nano
             div.content(ng-bind-html-unsafe="marked(cBlog.body || '<center style=\"padding: 20px;color:#999\">nothing to show...</center>')")

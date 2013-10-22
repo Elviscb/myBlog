@@ -55,8 +55,6 @@ ul.breadcrumb.pull-right {
 .span9#art{
     min-height: 270px;
     margin-bottom: 30px;
-    background: #FFF;
-    box-shadow: 0 0 3px #F1F1F1;
     box-sizing: border-box;
     padding: 10px;
 }
@@ -76,9 +74,10 @@ i[class*="icon-"]{
     padding-right: 5px;
 }
 
-footer{
+footer.row{
+	margin: 0;
     text-align: right;
-    padding: 10px;
+    padding: 10px 70px;
     background: #444;
     color: #FFF;
 }

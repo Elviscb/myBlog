@@ -27,9 +27,6 @@ html
                                     i.icon-user
                                     |about me
                             li
-                                a(href="/administer")
-                                    |administer
-                            li
                                 a(href="/customerManagementApp/wel.html")
                                     |angularDemo
                             li
@@ -42,12 +39,18 @@ html
                                         data-source="[\"呵呵\",\"拗口\",\"awdawd\"]")
             article.container
                 block content
-        footer
-            a(href="http://www.nodejs.org",target="_blank") nodejs
-            |&
-            a(href="http://expressjs.com",target="_blank") express
-            |&
-            a(href="http://gruntjs.com",target="_blank") grunt
+        footer.row
+            div.span4(style="text-align:left")
+                a(href="/administer") administer
+            div.span4(style="text-align:center")
+
+            div.span4
+                a(href="http://www.nodejs.org",target="_blank") nodejs
+                | &
+                a(href="http://expressjs.com",target="_blank") express
+                | &
+                a(href="http://gruntjs.com",target="_blank") grunt
+
         script(src="/bootstrap/bootstrap.min.js")
         script(src="/elvis.js")
         script(src="/menu.js")

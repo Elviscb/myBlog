@@ -7,9 +7,17 @@ article.container{
 #topNav{
 }
 
+#topNav #title{
+    border: 0;
+    padding: 0;
+    margin: 0;
+    background: rgba(0, 0, 0, 0);
+    box-shadow: none;
+    width: 40%;
+}
+
 #topNav #save{
     float: right;
-    margin-right: 10px;
 }
 
 .pane{
@@ -20,16 +28,14 @@ article.container{
 }
 
 #nav #leftheader{
-    border-left: 2px solid;
-    background: #DDD;
-    padding: 8px;
+
 }
 
 #nav #wrapper{
     position: absolute;
     overflow: hidden;
     width: 23.076923076923077%;
-    top: 46px;
+    top: 91px;
     bottom: 0px;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -74,14 +80,13 @@ article.container{
 }
 
 .b-flag{
-    border: 1px solid #ccc;
+    background: whitesmoke;
     border-radius: 3px;
     color: #999;
     font-size: 12px;
     padding: 0 5px;
     margin-left: 10px;
-    position: relative;
-    top: -12px;
+    float: right;
 }
 
 .b-flag i.icon-ok{
@@ -89,7 +94,6 @@ article.container{
 }
 
 .b-flag.ok{
-    border-color: #3FC500;
     color: #328A00;
     background: #E6FFE0;
 }
@@ -110,10 +114,12 @@ form input[name="title"]{
 }
 .CodeMirror{
     border: 1px solid #CCC;
-    border-radius: 5px;
+    border-bottom: 0;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
     position: absolute !important;
-    top: 110px;
-    bottom: 10px;
+    top: 61px;
+    bottom: 0px;
     height: auto !important;
     width: 422px;
 }
@@ -127,8 +133,11 @@ form input[name="title"]{
 #viewer{
     position: absolute;
     bottom: 0;
-    top: 30px;
+    top: 91px;
     width: 36.15%;
+    border-left: 2px solid #666;
+    border-right: 2px solid #666;
+    box-sizing: border-box;
 }
 
 #viewer .content{
@@ -142,8 +151,8 @@ iframe{
     height: 100%;
 }
 
-footer{
-    padding: 5px 10px;
+footer.row{
+    padding: 5px 70px;
     width: 100%;
     position: absolute;
     bottom: 0;
