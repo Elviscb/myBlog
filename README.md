@@ -10,7 +10,7 @@
     grunt build
 
 ##启动
-    node app
+    grunt web
 
 ##listen
 

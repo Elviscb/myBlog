@@ -6,16 +6,21 @@ module.exports = function(grunt) {
 
   var pkg = grunt.file.readJSON('package.json');
 
-
-
   // Project configuration.
   grunt.initConfig({
     pkg: pkg,
     // clean directories
     clean: {
-      article: ['build/article'],
       build: ['build/'],
       tmp: ['tmp/']
+    },
+
+    bower: {
+      install: {
+        options:{
+          targetDir: "assets/"
+        }
+      }
     },
 
     copy: {
@@ -98,8 +103,12 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jade');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
+  grunt.loadNpmTasks('grunt-bower-task');
   //grunt.loadNpmTasks('grunt-contrib-nodeunit');
   // Load local tasks
+  grunt.loadTasks('tasks'); // bower,server
 
-  grunt.registerTask('build', ['clean', 'copy', 'less']);
+  grunt.registerTask('build', ['bower:install','clean', 'copy', 'less']);
+  grunt.registerTask('serve', [ 'server']);
+  grunt.registerTask('web', ['build','server']);
 };
