@@ -1,0 +1,36 @@
+doctype html
+
+html
+    head
+        title 登录
+        link(rel="stylesheet"  href=locals.csslib('bootstrap'))
+        style.
+            .container{
+                margin-top: 30px;
+                width: 300px;
+            }
+    body
+        div.container
+            legend login
+
+            if(error)
+                div.alert
+                    button.close(type="button" data-dismiss="alert") &times;
+                    =error
+
+            form(action="/login" method="post")
+                input(type="hidden" name="red" value=red)
+                div.control-group
+                    label.control-label Name
+                    div.controls
+                        input(type="text" name="name" placeholder="Name" value=name)
+                div.control-group
+                    label.control-label Password
+                    div.controls
+                        input(type="password" name="passwd" placeholder="Password")
+                div.control-group
+                    div.controls
+                        label.checkbox
+                            input(type="checkbox")
+                            | Remember me
+                        button(type="submit" class="btn") Login

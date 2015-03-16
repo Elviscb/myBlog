@@ -1,0 +1,68 @@
+doctype html
+html
+    block head
+        head
+            title= locals.pkg.name
+            link(rel='stylesheet', href=locals.csslib('bootstrap'))
+            link(rel='stylesheet', href=locals.css('core'))
+            link(rel='stylesheet', href=locals.css('about-me'))
+            link(rel='stylesheet', href=locals.css('blog'))
+            link(rel='stylesheet', href=locals.css('xcode'))
+    body(data-ng-app=locals.angular_module_name)
+        div.container#main
+            header.navbar
+                div.navbar-inner
+                    div.container
+                        a.brand= locals.pkg.name
+                        ul.nav#main-nav(url=locals.req.path.match(new RegExp("\/[^/]*")))
+                            li(data-ng-class="{active:$state.includes('index')}")
+                                a(data-ui-sref="index")
+                                    i.icon-home.icon
+                                    |home
+                            li(data-ng-class="{active:$state.includes('blog')}")
+                                a(data-ui-sref="blog.list")
+                                    i.icon-pencil.icon
+                                    |blog
+                            li(data-ng-class="{active:$state.includes('about-me')}")
+                                a(data-ui-sref="about-me.tab1")
+                                    i.icon-user.icon
+                                    |about me
+                            li
+                                a(href="/customerManagementApp/wel.html")
+                                    |angularDemo
+                            li
+                                a(href="/auth")
+                                    |login
+                            //li
+                                form.navbar-search(action="/search")
+                                    input.search-query(type="text",style="margin: 0 auto;",
+                                        data-provide="typeahead",data-items="4",name="query",autocomplete="off",
+                                        data-source="[\"呵呵\",\"拗口\",\"awdawd\"]")
+                            //li(style="float:right")
+                                embed.pull-right(src="http://music.163.com/style/swf/widget.swf?sid=207596&type=1&auto=1&width=278&height=32" width="298" height="40"  allowNetworking="all")
+            article.container
+                block content
+        footer.row
+            div.container
+                div.row
+                    div.span3()
+                        a(href="/admin") admin
+                    div.span9.dep
+                        a(href="http://www.nodejs.org",target="_blank") nodejs
+                        | &
+                        a(href="http://expressjs.com",target="_blank") express
+                        | &
+                        a(href="http://gruntjs.com",target="_blank") grunt
+
+        script(src=locals.jslib('jquery,angular,angular-sanitize,angular-ui-router'))
+        script(src=locals.js('models'))
+        script(src=locals.js("core"))
+        script(src=locals.js("home"))
+        script(src=locals.js("about-me"))
+        script(src=locals.js("blog"))
+        script.
+            Cb.config({
+                angular_module_name: "#{angular_module_name}",
+                version: "#{pkg.version}"
+            });
+            Cb.init();

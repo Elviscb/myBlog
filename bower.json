@@ -1,0 +1,31 @@
+{
+  "name": "cb blog",
+  "version": "0.2.0",
+  "homepage": "https://github.com/Elviscb/myBlog",
+  "authors": [
+    "cb <cb050034@gmail.com>"
+  ],
+  "description": "my blog server",
+  "main": "bin/product/run",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "assets",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "1.8.3",
+    "jquery-form": "3.46.0",
+    "angular": "1.2.5",
+    "bootstrap": "2.3.1",
+    "marked": "0.3.1",
+    "underscore": "1.5.1",
+    "restangular": "1.4.0",
+    "angular-ui-router": "0.2.13",
+    "angular-sanitize": "1.2.5",
+    "modernizr": "~2.8.3",
+    "normalize": "~1.0.4"
+  }
+}

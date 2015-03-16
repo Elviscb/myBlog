@@ -1,0 +1,42 @@
+legend(style="margin:0") 文章
+div#article
+    table.table.table-striped
+        thead
+            tr
+                td(colspan="4")
+                    form#bform(action="/admin/up",style="margin:0")
+                        input#bfile.hide(type="file",name="file")
+                        a.btn.btn-mini(data-ng-click="selectfile()") 选择文件
+                        span &nbsp;
+                        span(data-ng-bind="file.files[0].name")
+                        span &nbsp;
+                        input.btn.btn-mini.btn-primary(type="submit",value="上传")
+        tbody
+            tr
+                td 标题
+                td 大小
+                td(colspan="2") 修改时间
+            tr(data-ng-if="isloading")
+                td(colspan="4")
+                    center(data-ng-bind="loading")
+            tr(data-ng-repeat="v in blogs")
+                td(data-ng-bind="v.title")
+                td(data-ng-bind="v.size | size")
+                td(data-ng-bind="v.mtime | date:'yyyy-M-d H:mm:ss'")
+                td
+                    div.text-right
+                        a.btn.btn-mini(data-ng-click="del(v._id)")
+                            i.icon-remove
+                            |  delete
+                        span &nbsp;&nbsp;
+                        a.btn.btn-mini(data-ng-click="view(v._id)")
+                            i.icon-eye-open
+                            |  view
+    div.pagination.pagination-centered
+        ul
+            li(data-ng-class="{disabled:page==1}")
+                a(href="#",data-ng-click="go(page-1)") «
+            li(data-ng-repeat="p in pager.pages",data-ng-class="{disabled:page==p}")
+                a(href="#",data-ng-bind="p",data-ng-click="go(p)")
+            li(data-ng-class="{disabled:page==pager.totalpage}")
+                a(href="#",data-ng-click="go(page+1)") »

@@ -1,0 +1,38 @@
+doctype html
+html
+    head
+        meta(charset="utf-8")
+        link(rel='stylesheet', href=locals.csslib('bootstrap'))
+        link(rel='stylesheet', href=locals.css('admin'))
+    body(data-ng-app="Cb.admin")
+        div#nav(data-ng-controller="navController")
+            a.nav-menu-button(href="#",data-ng-click="toggle()") Menu
+
+            div.nav-inner
+                a.btn(href="/") 首页
+                span &nbsp;&nbsp;
+                a.btn.btn-warning(href="/logout") 退出
+
+                div.menus
+                    ul
+                        li(data-ng-class="{active:$state.includes('blog')}")
+                            a(data-ui-sref="blog") 文章
+
+        div#main.container(data-ui-view)
+
+        div#template1.modal.hide.fade(tabindex="-1",role="dialog",aria-labelledby="myModalLabel",aria-hidden="true")
+            div.modal-header
+                button.close(type="button",data-dismiss="modal",aria-hidden="true") ×
+                h3#myModalLabel Modal header
+            div.modal-body
+                p One fine body…
+            div.modal-footer
+                button.btn(data-dismiss="modal" aria-hidden="true") 关闭
+                //button.btn.btn-primary Save changes
+
+        script(src=locals.jslib('jquery,jquery-form,bootstrap-modal,angular,angular-ui-router'))
+        script(src=locals.js('models'))
+        script(src=locals.js('core'))
+        script(src=locals.js('admin'))
+        script.
+            Cb.init();

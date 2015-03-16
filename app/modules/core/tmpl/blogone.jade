@@ -1,0 +1,24 @@
+block content
+    ul.breadcrumb.pull-right
+        li
+            a(data-ui-sref="blog.list") blog
+            span.divider /
+        li
+
+            span(data-ng-bind="blog.name")
+    h2.page-header(data-ng-bind="blog._id || '--'")
+    div(style="margin: -25px 0 20px;")
+        i.icon-download
+        a(href="/download/{{blog._id}}.md") RAW&Download...
+    div.row
+        div.span3#leftinfo
+            dl
+                dt 修改时间
+                dd(data-ng-bind="blog.mtime | date:'yyyy-M-d H:mm:ss'")
+            dl
+                dt 大小
+                dd(data-ng-bind="blog.size | size")
+
+        div.span9#art
+            div(data-ng-bind-html="blog.text || loading")
+                block blog

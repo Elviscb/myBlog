@@ -1,0 +1,5 @@
+ul
+    li(data-ng-repeat="blog in blogs")
+        h4.blog-body
+            a(data-ui-sref="blog.one({id:blog._id})") {{blog._id}}
+        div.blog-feet {{blog.mtime | date:"yyyy-M-d H:mm:ss"}}
