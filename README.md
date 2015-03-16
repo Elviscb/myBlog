@@ -1,6 +1,11 @@
-#Hi,this is my blog's server 
+#我的博客服务器 
 
-##article
+##版本v.0.2.0
 
-I have change the markdown.js to match github's
-markdown language style
+- 去掉多余的功能
+- 完全使用文件博客，不使用数据库
+- markdown语法扩展
+
+##listen
+
+MIT

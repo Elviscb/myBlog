@@ -1,0 +1,7 @@
+div.tabbable#about-me
+    ul.nav.nav-tabs(rem)
+        li(data-ng-class="{active:$state.includes('about-me.tab1')}")
+            a(data-ui-sref="about-me.tab1") Section 1
+        li(data-ng-class="{active:$state.includes('about-me.tab2')}")
+            a(data-ui-sref="about-me.tab2") Section 2
+    div.tab-content(data-ui-view="")

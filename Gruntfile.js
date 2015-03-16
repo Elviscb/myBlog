@@ -1,129 +1,92 @@
 'use strict';
 
+var _ = require("underscore");
+
 module.exports = function(grunt) {
+
+  var pkg = grunt.file.readJSON('package.json');
+
+
 
   // Project configuration.
   grunt.initConfig({
-    // server port, used to serve the site and run tests
-    server_port: 5678,
+    pkg: pkg,
     // clean directories
     clean: {
       article: ['build/article'],
       build: ['build/'],
       tmp: ['tmp/']
     },
-    // compile less -> css
-    less: {
-      development: {
-        options: {
-          paths: ["src/less"]
-        },
-        files: {
-          "build/css/main.css": "src/less/main.less"
-        }
+
+    copy: {
+      tmpl:{
+        files: [
+          {expand: true, flatten: true, src: 'app/modules/*/tmpl/*', dest: 'build/local/tmpl/'}
+        ]
       },
+      js: {
+        expand: true,
+        flatten: true,
+        src: [
+          'app/modules/*/public/*.js'
+        ],
+        dest: 'build/public/js/'
+      },
+      css: {
+        expand: true,
+        flatten: true,
+        src: [
+          'app/modules/*/public/*.css'
+        ],
+        dest: 'build/public/css/'
+      },
+      less: {
+        expand: true,
+        flatten: true,
+        src: [
+          'app/modules/*/less/*.less'
+        ],
+        dest: 'build/local/less/'
+      }
+    },
+
+    less: {
       production: {
         options: {
-          paths: ["src/less"],
+          compress: true,
+          cleancss: true,
           yuicompress: true
         },
-        files: {
-          "build/css/main.css": "src/less/main.less"
-        }
+        files: [{
+          expand: true,
+          flatten:true,
+          cwd: 'build/',
+          src: ['local/less/*.less'],
+          dest: 'build/public/css/',
+          ext: '.css'
+        }]
       }
     },
 
     watch: {
-//      static: {
-//        files: 'src/less/*.less',
-//        tasks: ['less:development']
-//      },
-//      less: {
-//        files: 'src/less/*.less',
-//        tasks: ['less:development']
-//      },
-//      article: {
-//        files: 'articles/mds/*.md',
-//        tasks: ['clean:article','article']
-//      },
-
-        assets: {
-            files: ['app/modules/*/public/**','app/public/**','src/**'],
-            tasks: ['copy:assets']
-        },
-
-        root: {
-            files: ['app/model/*/tmpl/*','app/modules/*/tmpl/*','app/tmpl/*'],
-            tasks: ['copy:root']
-        }
-
-    },
-
-    // compile page layouts
-    jade: {
-      notfound: {
-        options: {
-          data: {
-            page: 'notfound',
-            title: '404 Not Found'
-          }
-        },
-        files: {
-          //"build/404.html": "src/tmpl/404.jade"
-        }
-      }
-    },
-
-    concat: {
-      // if we add more js, modify this properly
-      plugins: {
-        src: [
-          'src/javascripts/modules/*.js',
-          'src/javascripts/*.js'
-        ],
-        dest: 'build/js/main.js'
-      }
-    },
-
-    jshint: {
-      all: ['Gruntfile.js', 'tasks/*.js'],
-      options: {
-        curly: true,
-        eqeqeq: true,
-        immed: true,
-        latedef: true,
-        newcap: true,
-        noarg: true,
-        sub: true,
-        undef: true,
-        unused: true,
-        boss: true,
-        eqnull: true,
-        node: true,
-        es5: true
-      }
-    },
-
-    // copy site source files
-    copy: {
-      assets: {
-        files: [
-            {expand: true, cwd: 'src/', src: ['**'], dest: 'build/public'},
-            {expand: true, flatten:true, cwd: 'app/modules', src: ['*/public/**'], dest: 'build/public'},
-            {expand: true, flatten:true, cwd: 'app/public', src: ['**'], dest: 'build/public'}
-        ]
+      less: {
+        files: 'app/modules/*/less/*.less',
+        tasks: ['copy:less','less:production']
       },
-      root: {
-        files: [
-            {expand: true, flatten:true, cwd: 'app/tmpl', src: ['*'], dest: 'build/local'},
-            {expand: true, flatten:true, cwd: 'app/model', src: ['*/tmpl/*'], dest: 'build/local'},
-            {expand: true, flatten:true, cwd: 'app/modules', src: ['*/tmpl/*'], dest: 'build/local'}
-        ]
+      css: {
+        files: 'app/modules/*/public/*.css',
+        tasks: ['copy:css']
+      },
+      js: {
+        files: ['app/modules/*/public/*.js'],
+        tasks: ['copy:js']
+      },
+      tmpl: {
+        files: 'app/modules/*/tmpl/*',
+        tasks: ['copy:tmpl']
       }
-    },
-    nodeunit: {
-      all: ['test/*_test.js']
     }
+
   });
 
   // Load contrib tasks
@@ -134,13 +97,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-jade');
   grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
   //grunt.loadNpmTasks('grunt-contrib-nodeunit');
   // Load local tasks
-  grunt.loadTasks('tasks'); // getWiki, docs tasks
-  
-  grunt.registerTask('build', ['clean', 'copy', 'jade']);
-  grunt.registerTask('default', ['build', 'server']);
-  grunt.registerTask('dev', ['build', 'server']);
-  //grunt.registerTask('test', ['nodeunit']);
-  grunt.registerTask('serve', ['server']);
+
+  grunt.registerTask('build', ['clean', 'copy', 'less', 'watch']);
 };
