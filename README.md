@@ -7,7 +7,7 @@
 - markdown语法扩展
 
 ##构建
-    grunt
+    grunt build
 
 ##启动
     node app
