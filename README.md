@@ -6,6 +6,12 @@
 - 完全使用文件博客，不使用数据库
 - markdown语法扩展
 
+##构建
+    grunt
+
+##启动
+    node app
+
 ##listen
 
 MIT
