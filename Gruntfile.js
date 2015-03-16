@@ -101,5 +101,5 @@ module.exports = function(grunt) {
   //grunt.loadNpmTasks('grunt-contrib-nodeunit');
   // Load local tasks
 
-  grunt.registerTask('build', ['clean', 'copy', 'less', 'watch']);
+  grunt.registerTask('build', ['clean', 'copy', 'less']);
 };
