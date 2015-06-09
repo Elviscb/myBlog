@@ -1,8 +1,5 @@
 /**
- * Created with JetBrains WebStorm.
- * User: Administrator
- * Date: 13-9-2
- * Time: 下午4:40
+ *
  */
 
 module.exports = function(page, count, pagecount){

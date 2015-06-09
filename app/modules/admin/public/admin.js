@@ -23,6 +23,10 @@ Cb(function(){
                 url: "/",
                 templateUrl: "/admin/blog",
                 controller: "blogController"
+            }).state("logger",{
+                url: "/logger",
+                templateUrl: "/admin/logger",
+                controller: "loggerController"
             });
             $urlRouterProvider.otherwise("/");
 
@@ -81,16 +85,22 @@ Cb(function(){
                     .end()
                     .modal({});
             });
-        }
+        };
         //删除
         $scope.del = function(id){
             if(!confirm("删除?")) return;
             Blog.del(id).success(function(data){
                 $scope.go();
             });
-        }
+        };
         //init
         $scope.go(1);
     }]);
 
+    app.controller("loggerController", ["$scope", "$rootScope", "Logger", "$http", function($scope,$rootScope,Logger,$http){
+        Logger.visit().success(function(data){
+            $scope.data = data.result;
+        });
+
+    }]);
 });

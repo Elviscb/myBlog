@@ -30,8 +30,8 @@ angular.module("Cb.models",[]).factory("Http", ["$http",function($http){
 }]).factory("Blog", ["Http",function(http){
 
     var handler = http.handle
-       , actor = http.actor
-       , Blog = {
+      , actor = http.actor
+      , Blog = {
             all: function(page,count){
                 if(!page) page = 1;
                 if(!count) count = 10;
@@ -49,6 +49,19 @@ angular.module("Cb.models",[]).factory("Http", ["$http",function($http){
 
     return Blog;
 
+}]).factory("Logger", ["Http",function(http){
+    var handler = http.handle
+      , actor = http.actor
+      , Logger = {
+            err: function(){
+                return handler(actor.get('/admin/errlog'));
+            },
+            visit: function(){
+                return handler(actor.get('/admin/visitlog'));
+            }
+        };
+
+    return Logger;
 }]).filter("size", function(){
     return function(input){
         input = parseInt(input);

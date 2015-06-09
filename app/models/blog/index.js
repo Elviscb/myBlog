@@ -131,9 +131,12 @@ var Q = require("q")
                             return false;
                     }
                     return true;
-                }) || {};
+                });
                 return r;
             }).then(function(r){
+                if(!r){
+                    throw new Error("not found");
+                }
                 r = _.clone(r);
                 return App.tools.read_file(path.join(blogsPath, r.title)).then(function(data){
                     return _.extend(r,{

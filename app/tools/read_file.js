@@ -8,8 +8,7 @@ module.exports = function(realPath){
 
     fs.exists(realPath, function (exists) {
         if (!exists) {
-            console.log("Can't find file:"+realPath);
-            deferred.resolve(false);
+            deferred.reject("Can't find file:"+realPath);
         } else {
             fs.stat(realPath,function(err,stat){
                 if(err) return deferred.reject(err);
@@ -21,8 +20,8 @@ module.exports = function(realPath){
                         if (err) return deferred.reject(err);
                         deferred.resolve(files);
                     });
-                    return console.log("Find dir:" + realPath);
-                } else console.log("Find file:" + realPath);
+                    return;
+                }
                 fs.readFile(realPath, {
                     encoding: "utf-8"
                 },function(err,data){

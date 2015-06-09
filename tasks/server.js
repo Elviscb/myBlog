@@ -19,16 +19,26 @@ module.exports = function (grunt) {
 
         Q.fcall(function(){
             App.base_path = path.join(__dirname,"../");
-            App.tools = {};
-            App.tools.pager = require("./../app/tools/pager.js");
-            App.tools.read_file = require("./../app/tools/read_file.js");
-            App.tools.restfulmaker = require("./../app/tools/restfulmaker.js");
             App.paths = {
                 app: {
                     modules: path.join(App.base_path, "app", "modules"),
-                    models: path.join(App.base_path, "app", "models")
+                    models: path.join(App.base_path, "app", "models"),
+                    tools: path.join(App.base_path, "app", "tools")
                 }
             };
+            App.tools = (function(){
+                var paths = fs.readdirSync(App.paths.app.tools)
+                  , tools = {};
+
+                paths.forEach(function(v,i){
+                    var m = require(path.join(App.paths.app.tools, v));
+                    v = v.match(/[^\.]+/)[0];
+                    m.name = v;
+                    tools[v] = m;
+                });
+
+                return tools;
+            })();
             App.modules = (function(){
                 var paths = App.tools.read_file.sync(App.paths.app.modules)
                   , modules = {};
@@ -57,8 +67,11 @@ module.exports = function (grunt) {
                 pkg: JSON.parse(App.tools.read_file.sync("package.json")),
                 // server port, used to serve the site and run tests
                 port: 5678,
+                //io port
+                ioport: 5679,
                 //restful prefix
                 restful_prefix: "m",
+                public: path.join(App.base_path, 'build', 'public'),
                 assets: {
                     js: {
                         jquery: 'assets/jquery/jquery.js',
@@ -91,19 +104,18 @@ module.exports = function (grunt) {
               , router = express.Router();
 
             var favicon = require('serve-favicon');
-            var logger = require('morgan');
             var methodOverride = require('method-override');
             var session = require('express-session');
+            var cookieParser = require('cookie-parser');
             var bodyParser = require('body-parser');
             var multer = require('multer');
-            var errorHandler = require('errorhandler');
 
             server.set('port', config.port);
             server.set('views', path.join(base_path, 'build', 'local', 'tmpl'));
             server.set('view engine', 'jade');
-            server.use(express.static(path.join(base_path, 'build', 'public')));
-            server.use(logger('dev'));
+            server.use(express.static(config.public));
             server.use(methodOverride());
+            server.use(cookieParser());
             server.use(bodyParser.json());
             server.use(bodyParser.urlencoded({ extended: true }));
             server.use(multer());
@@ -112,31 +124,33 @@ module.exports = function (grunt) {
                 saveUninitialized: true,
                 secret: "fawd"
             }));
-            server.use(errorHandler({
-                dumpExceptions: false,
-                showStack: false
-            }));
 
             server.locals = {
                 pkg: config.pkg,
                 angular_module_name: config.pkg.name,
-                csslib: function(filename){
-                    return "/assets/css/"+filename+".css";
-                },
-                jslib: function(filename){
-                    return "/assets/js/"+filename+".js";
-                },
                 css: function(filename){
-                    return "/css/"+filename+".css";
+                    return "/assets/css/"+tools.base64.encode(filename)+".css";
                 },
                 js: function(filename){
-                    return "/js/"+filename+".js";
+                    return "/assets/js/"+tools.base64.encode(filename)+".js";
                 }
             };
 
             server.use(function(req, res, next){
                 res.locals.req = req;
                 res.locals.res = res;
+                res.jsonOk = function(result){
+                    res.json({
+                        result: result
+                    });
+                    res.end();
+                };
+                res.jsonError = function(error){
+                    res.json({
+                        error: error
+                    });
+                    res.end();
+                };
                 next();
             });
 
@@ -145,9 +159,10 @@ module.exports = function (grunt) {
                 var filename = req.param("filename")
                   , filetype = req.param("filetype");
 
+                filename = tools.base64.decode(filename);
                 var filenames = filename.split(",");
 
-                if(filenames.length==1)
+                if(filenames.length==1 && config.assets[filetype][filename])
                 try{
                     res.sendFile(path.join(base_path,config.assets[filetype][filename]));
                 }catch (e){
@@ -157,24 +172,31 @@ module.exports = function (grunt) {
                     var ds = [];
                     filenames.forEach(function (v, i) {
                         if(config.assets[filetype][v])
-                        ds.push(tools.read_file(path.join(base_path,config.assets[filetype][v])));
+                            ds.push(tools.read_file(path.join(base_path,config.assets[filetype][v])));
+                        else ds.push(tools.read_file(path.join(config.public,filetype,v+'.'+filetype)));
                     });
-                    Q.spread(ds, function(){
-                        [].forEach.call(arguments,function(v,i){
-                            ds[i] = v;
+                    Q.allSettled(ds).then(function(results){
+                        var dsi = [];
+                        results.forEach(function (result) {
+                            if (result.state === "fulfilled") {
+                                dsi.push(result.value);
+                            } else {
+                                dsi.push("/*file load err:" + result.reason + "*/");
+                            }
                         });
-                        var rbody = ds.join("\n");
+
+                        var rbody = dsi.join("\n");
                         var crypto = require('crypto');
                         var shasum = crypto.createHash('sha1');
                         shasum.update(rbody);
                         var sha1 = shasum.digest('hex');
                         if(etag == sha1){
-                            res.status(304)
+                            res.status(304);
                             res.end();
                         }else{
                             res.set({
                                 'ETag': sha1
-                            })
+                            });
                             res.end(rbody);
                         }
                     });
@@ -184,7 +206,7 @@ module.exports = function (grunt) {
 
             _.each(App.modules, function(v,k){
                 //laod module
-                v.init(router);
+                v.init(router, server);
             });
 
             _.each(App.models, function(v,k){
@@ -196,6 +218,12 @@ module.exports = function (grunt) {
             server.use(function(req,res){
                 res.status(404).render("404",{
                     routes: []
+                });
+            });
+            server.use(function(err, req, res, next){
+                App.modules.logger.error(req, res, err);
+                res.status(500).render("500", {
+                    stack: err.stack
                 });
             });
 

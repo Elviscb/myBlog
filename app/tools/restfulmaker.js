@@ -13,15 +13,9 @@ module.exports = function(name, obj, server){
             var result = value.apply(global, params);
 
             if(result.then) result.then(function(result){
-                res.json({
-                    result: result
-                });
-                res.end();
+                res.jsonOk(result);
             }).catch(function(e){
-                res.json({
-                    error: e.stack
-                });
-                res.end();
+                res.jsonError(e.stack);
             });
         });
     });

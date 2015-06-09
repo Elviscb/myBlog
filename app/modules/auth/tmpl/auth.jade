@@ -3,7 +3,7 @@ doctype html
 html
     head
         title 登录
-        link(rel="stylesheet"  href=locals.csslib('bootstrap'))
+        link(rel="stylesheet"  href=locals.css('bootstrap'))
         style.
             .container{
                 margin-top: 30px;
@@ -31,6 +31,6 @@ html
                 div.control-group
                     div.controls
                         label.checkbox
-                            input(type="checkbox")
+                            input(name="remember-me",type="checkbox")
                             | Remember me
                         button(type="submit" class="btn") Login

@@ -3,11 +3,7 @@ html
     block head
         head
             title= locals.pkg.name
-            link(rel='stylesheet', href=locals.csslib('bootstrap'))
-            link(rel='stylesheet', href=locals.css('core'))
-            link(rel='stylesheet', href=locals.css('about-me'))
-            link(rel='stylesheet', href=locals.css('blog'))
-            link(rel='stylesheet', href=locals.css('xcode'))
+            link(rel='stylesheet', href=locals.css('bootstrap,core,about-me,blog,xcode'))
     body(data-ng-app=locals.angular_module_name)
         div.container#main
             header.navbar
@@ -54,12 +50,7 @@ html
                         | &
                         a(href="http://gruntjs.com",target="_blank") grunt
 
-        script(src=locals.jslib('jquery,angular,angular-sanitize,angular-ui-router'))
-        script(src=locals.js('models'))
-        script(src=locals.js("core"))
-        script(src=locals.js("home"))
-        script(src=locals.js("about-me"))
-        script(src=locals.js("blog"))
+        script(src=locals.js('jquery,angular,angular-sanitize,angular-ui-router,models,core,home,about-me,blog'))
         script.
             Cb.config({
                 angular_module_name: "#{angular_module_name}",
