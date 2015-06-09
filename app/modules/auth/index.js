@@ -48,7 +48,7 @@ exports.init = function(router, server){
                 res.redirect(decodeURIComponent(red));
             }
         }).fail(function(error){
-            logger(req, res, error);
+            logger(req, res, error.stack);
             res.render("auth",{
                 red: red,
                 error: "something wrong...",
