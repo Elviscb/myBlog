@@ -2,9 +2,12 @@ doctype html
 html
     head
         meta(charset="utf-8")
-        link(rel='stylesheet', href=locals.css('bootstrap,admin'))
+        link(rel='stylesheet', href=locals.css('bootstrap'))
+        link(rel='stylesheet', href=locals.css('admin'))
     body(data-ng-app="Cb.admin")
         div#top.clearfix
+            top-drop-down(title=locals.req.hostname,href="/")
+                top-drop-down-option(title="查看站点",href="/")
             div.hello 你好,#{locals.req.session.user.name}
         div#nav(data-ng-controller="navController")
             a.nav-menu-button(href="#",data-ng-click="toggle()") Menu
@@ -16,8 +19,10 @@ html
 
                 div.menus
                     ul
-                        li(data-ng-class="{active:$state.includes('blog')}")
+                        li(data-ng-class="{active:$state.includes('blog')||$state.includes('blog-edit')}")
                             a(data-ui-sref="blog") 文章
+                        li(data-ng-class="{active:$state.includes('blog-create')}")
+                            a(data-ui-sref="blog-create") 新建文章
                         li(data-ng-class="{active:$state.includes('logger')}")
                             a(data-ui-sref="logger") 日志
 
@@ -33,6 +38,20 @@ html
                 button.btn(data-dismiss="modal" aria-hidden="true") 关闭
                 //button.btn.btn-primary Save changes
 
-        script(src=locals.js('jquery,jquery-form,bootstrap-modal,angular,angular-ui-router,models,core,admin'))
+        script(src=locals.js('jquery'))
+        script(src=locals.js('jquery-form'))
+        script(src=locals.js('bootstrap-modal'))
+        script(src=locals.js('angular'))
+        script(src=locals.js('angular-ui-router'))
+        script(src=locals.js('underscore'))
+        script(src=locals.js('restangular'))
+        script(src=locals.js('simplemde.min'))
+        script(src=locals.js('core'))
+        script(src=locals.js('service'))
+        script(src=locals.js('admin'))
+        script(src=locals.js('admindirective'))
         script.
+            Cb.config({
+                restful_prefix: "#{restful_prefix}"
+            });
             Cb.init();

@@ -3,7 +3,10 @@ html
     block head
         head
             title= locals.pkg.name
-            link(rel='stylesheet', href=locals.css('bootstrap,core,about-me,blog,xcode'))
+            link(rel='stylesheet', href=locals.css('bootstrap'))
+            link(rel='stylesheet', href=locals.css('core'))
+            link(rel='stylesheet', href=locals.css('about-me'))
+            link(rel='stylesheet', href=locals.css('xcode'))
     body(data-ng-app=locals.angular_module_name)
         div.container#main
             header.navbar
@@ -48,12 +51,23 @@ html
                         | &
                         a(href="http://expressjs.com",target="_blank") express
                         | &
-                        a(href="http://gruntjs.com",target="_blank") grunt
+                        a(href="http://gruntjs.com",target="_blank",hashlink) grunt
 
-        script(src=locals.js('jquery,angular,angular-sanitize,angular-ui-router,models,core,home,about-me,blog'))
+        script(src=locals.js('jquery'))
+        script(src=locals.js('underscore'))
+        script(src=locals.js('angular'))
+        script(src=locals.js('angular-sanitize'))
+        script(src=locals.js('angular-ui-router'))
+        script(src=locals.js('restangular'))
+        script(src=locals.js('core'))
+        script(src=locals.js('service'))
+        script(src=locals.js('home'))
+        script(src=locals.js('about-me'))
+        script(src=locals.js('blog'))
         script.
             Cb.config({
                 angular_module_name: "#{angular_module_name}",
-                version: "#{pkg.version}"
+                version: "#{pkg.version}",
+                restful_prefix: "#{restful_prefix}"
             });
             Cb.init();

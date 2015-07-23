@@ -15,35 +15,19 @@ module.exports = function(grunt) {
       tmp: ['tmp/']
     },
 
-    bower: {
-      install: {
-        options:{
-          targetDir: "assets/"
-        }
-      }
-    },
-
     copy: {
       tmpl:{
         files: [
           {expand: true, flatten: true, src: 'app/modules/*/tmpl/*', dest: 'build/local/tmpl/'}
         ]
       },
-      js: {
+      public: {
         expand: true,
         flatten: true,
         src: [
-          'app/modules/*/public/*.js'
+          'app/modules/*/public/*'
         ],
-        dest: 'build/public/js/'
-      },
-      css: {
-        expand: true,
-        flatten: true,
-        src: [
-          'app/modules/*/public/*.css'
-        ],
-        dest: 'build/public/css/'
+        dest: 'build/public/'
       },
       less: {
         expand: true,
@@ -67,7 +51,7 @@ module.exports = function(grunt) {
           flatten:true,
           cwd: 'build/',
           src: ['local/less/*.less'],
-          dest: 'build/public/css/',
+          dest: 'build/public/',
           ext: '.css'
         }]
       }
@@ -108,7 +92,8 @@ module.exports = function(grunt) {
   // Load local tasks
   grunt.loadTasks('tasks'); // bower,server
 
-  grunt.registerTask('build', ['bower:install','clean', 'copy', 'less']);
-  grunt.registerTask('serve', [ 'server']);
+  grunt.registerTask('build', ['clean', 'copy', 'less']);
+  grunt.registerTask('serve', ['server']);
   grunt.registerTask('web', ['build','server']);
+  grunt.registerTask('default', ['server']);
 };

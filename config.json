@@ -1,0 +1,29 @@
+{
+  "port": 5678,
+  "ioport": 5679,
+  "restful_prefix": "/m",
+  "assets": {
+    "js": {
+      "jquery": "jquery/jquery.js",
+      "jquery-form": "jquery-form/jquery.form.js",
+      "marked": "marked/lib/marked.js",
+      "underscore": "underscore/underscore-min.js",
+      "underscore-min": "underscore/underscore-min.map",
+      "angular": "angular/angular.js",
+      "angular-sanitize": "angular-sanitize/angular-sanitize.min.js",
+      "angular-sanitize.min.js": "angular-sanitize/angular-sanitize.min.js.map",
+      "angular-ui-router": "angular-ui-router/release/angular-ui-router.min.js",
+      "restangular": "restangular/dist/restangular.min.js",
+      "bootstrap-modal": "bootstrap/js/bootstrap-modal.js",
+      "normalize": "normalize/normalize.js",
+      "normalize-min": "normalize/normalize.min.js"
+    },
+    "css": {
+      "bootstrap": "bootstrap/docs/assets/css/bootstrap.css"
+    },
+    "img": {
+      "glyphicons-halflings": "bootstrap/img/glyphicons-halflings.png",
+      "glyphicons-halflings-white": "bootstrap/img/glyphicons-halflings-white.png"
+    }
+  }
+}

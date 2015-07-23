@@ -1,16 +1,14 @@
-/**
- *
- */
+angular.module("Cb.service",["restangular"]).factory('RestFulResponse', function(Restangular) {
+    return Restangular.withConfig(function(RestangularConfigurer) {
+        RestangularConfigurer.setFullResponse(true);
+    });
+}).factory("Pager", function() {
 
-module.exports = function(page, count, pagecount){
-
-    function Pager(page, count, pagecount){
-
+    function Pager(page, count, pagecount, total){
         this.page = parseInt(page || 1);
-        this.total = 0;
         this.count = parseInt(count || 20);
         this.pagecount = parseInt(pagecount || 10);
-
+        this.total = parseInt(total) || 0;
     };
 
     Pager.prototype.setTotal = function(data){
@@ -20,7 +18,7 @@ module.exports = function(page, count, pagecount){
 
     Pager.prototype.__defineGetter__("totalpage",function(){
         return this.total%this.count==0?this.total/this.count:
-            this.total/this.count-this.total%this.count/this.count+1;
+        this.total/this.count-this.total%this.count/this.count+1;
     });
 
     Pager.prototype.__defineGetter__("pages",function(){
@@ -58,6 +56,10 @@ module.exports = function(page, count, pagecount){
         };
     };
 
-    return new Pager(page, count, pagecount);
+    return {
+        new: function(page, count, pagecount, total){
+            return new Pager(page, count, pagecount, total);
+        }
+    };
 
-};
+});

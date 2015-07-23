@@ -1,4 +1,5 @@
 var path = require("path");
+var jserver = require("json-server");
 
 exports.init = function(router, server){
     var auth = App.modules.auth;
@@ -42,15 +43,14 @@ exports.init = function(router, server){
         res.render("blogone");
     });
 
-    router.get("/download/:name", function (req, res, next) {
+    router.get("/download/:id", function (req, res, next) {
 
-        App.models.blog.Blog.findOneQ({_id: req.params.name}).then(function(data){
-            if(!data._id) return next();
-            res.setHeader("Content-Type", "text/x-markdown");
-            res.end(data.body);
-        }).fail(function(err){
-            res.end(String(err));
-        });
+        var blog = App.modules.restful.jsonServerRouter.db("blog").find({id: parseInt(req.params.id)});
+
+        if(!blog) return next();
+
+        res.setHeader("Content-Type", "text/x-markdown");
+        res.end(blog.body);
 
     });
 

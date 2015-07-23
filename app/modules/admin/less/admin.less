@@ -1,3 +1,5 @@
+@import "common.less";
+
 /*
  * Top styles
  */
@@ -11,6 +13,47 @@
   line-height: 32px;
   background: #59524C;
   color: #fff;
+  z-index: 9;
+
+  .ddown{
+    float: left;
+    position: relative;
+    padding: 0 7px;
+    cursor: pointer;
+    &:hover{
+      background: #46403C;
+    }
+    p{
+      margin: 0;
+      a{
+        text-decoration: none;
+        color: #FFF;
+      }
+    }
+    ul{
+      position: absolute;
+      left: 0px;
+      right: -5px;
+      margin: 0;
+      padding: 0 10px;
+      background: #46403C;
+      box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 5px 0px;
+      li{
+        list-style: none;
+        line-height: 32px;
+        margin: 0;
+        white-space: nowrap;
+        a{
+          text-decoration: none;
+          font-size: 12px;
+          color: #FFF;
+          &:hover{
+            color: #C7A589;
+          }
+        }
+      }
+    }
+  }
 
   .hello{
     float: right;
@@ -84,6 +127,58 @@
 
 #main{
   width: 100%;
+
+  .ins-title{
+    border-bottom: 0;
+    margin: 0;
+  }
+
+  .create-wrap{
+    .clearfix;
+
+    .create-left{
+      width: 80%;
+      float: left;
+
+      .create-title{
+        padding: 4px 8px;
+        border: 1px solid #CCC;
+        margin-bottom: 10px;
+
+        input{
+          border: 0;
+          display: block;
+          width: 100%;
+          outline: none;
+          font-size: 20px;
+          line-height: 25px;
+          height: 25px;
+          color: #333;
+        }
+      }
+      .create-body{
+
+      }
+      .tip,.tip-false{
+        padding: 4px 8px;
+        color: #444;
+        margin-bottom: 10px;
+      }
+      .tip{
+        background: #ECF9F0;
+        border-left: 2px solid #008000;
+      }
+      .tip-false{
+        background: #F9ECEC;
+        border-left: 2px solid #ff0000;
+      }
+    }
+    .create-right{
+      width: 17%;
+      float: right;
+    }
+  }
+
 }
 
 
@@ -100,6 +195,7 @@
     top: 32px;
     bottom: 0;
     overflow: auto;
+    overflow-x: hidden;
     height: auto;
     width: 150px;
 
@@ -112,6 +208,21 @@
         margin: 20px 0 10px 0;
 
         li {
+          &.active{
+            position: relative;
+            &:after{
+              content: "";
+              position: absolute;
+              width: 0;
+              height: 0;
+              right: -2px;
+              top: 6px;
+              background: #FFF;
+              border-right: 10px solid #FFF;
+              border-bottom: 10px solid #C7A589;
+              border-top: 10px solid #C7A589;
+            }
+          }
           a {
 
           }

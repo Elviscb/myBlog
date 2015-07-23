@@ -1,6 +1,8 @@
 {
   "directory": "assets/",
   "analytics": false,
+  "proxy":"http://127.0.0.1:7777",
+  "https-proxy":"http://127.0.0.1:7777",
   "registry": {
     "search": [
       "https://bower.herokuapp.com"

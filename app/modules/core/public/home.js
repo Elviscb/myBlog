@@ -3,12 +3,13 @@ Cb(function(){
     console.log("sup");
 
     var app = Cb.app = angular.module(Cb.angular_module_name,[
-        'Cb.models',
+        'Cb.service',
+        "restangular",
         'ui.router',
         'ngSanitize'
     ]).run(
-        ['$rootScope', '$state', '$stateParams',
-            function ($rootScope,   $state,   $stateParams) {
+        ['$rootScope', '$state', '$stateParams', "Restangular",
+            function ($rootScope, $state, $stateParams, Restangular) {
 
                 // It's very handy to add references to $state and $stateParams to the $rootScope
                 // so that you can access them from any scope within your applications.For example,
@@ -16,6 +17,7 @@ Cb(function(){
                 // to active whenever 'contacts.list' or one of its decendents is active.
                 $rootScope.$state = $state;
                 $rootScope.$stateParams = $stateParams;
+                Restangular.setBaseUrl(Cb.restful_prefix);
             }
         ]
     );
@@ -36,7 +38,7 @@ Cb(function(){
             $urlRouterProvider.otherwise("/");
         }]);
 
-    app.controller("indexController", ["$scope",'Blog', function($scope,Blog){
+    app.controller("indexController", ["$scope", function($scope){
 
     }]);
 

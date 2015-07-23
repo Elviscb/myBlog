@@ -11,7 +11,7 @@ exports.init = function(router, server){
     var logger = App.modules.logger;
 
     router.get("/auth", function(req, res, next){
-        req.redi = req.param("red") || "/admin";
+        req.redi = decodeURIComponent(req.param("red")) || "/admin";
         next();
     }, function(req, res, next){
         var ru = req.cookies["remember-user"];
@@ -133,11 +133,11 @@ exports.init = function(router, server){
 };
 
 exports.interrupt = function(server,name){
-    server.use("/" + name,function(req,res,next){
+    server.use(name,function(req,res,next){
         if(req.session.user){
             next();
         }else{
-            res.redirect("/auth?red="+req.originalUrl);
+            res.redirect("/auth?red="+encodeURIComponent(req.originalUrl));
         }
     });
 };

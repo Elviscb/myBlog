@@ -1,0 +1,14 @@
+link(rel='stylesheet', href=locals.css('simplemde.min'))
+link(rel='stylesheet', href=locals.css('fontawesome/css/font-awesome.min'))
+
+legend.ins-title {{titletop}}文章
+div#blogcreate
+    div.create-wrap
+        div.create-left
+            div.tip(data-ng-if="put_success==true") {{put_success_text}}
+            div.tip-false(data-ng-if="put_false==true") {{put_false_text}}
+            div.create-title
+                input(data-ng-model="title")
+            textarea#mdeditor(data-ng-model="body")
+        div.create-right
+            button.btn(data-ng-click="post()") 发布
