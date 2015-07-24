@@ -19,10 +19,13 @@ html
 
                 div.menus
                     ul
-                        li(data-ng-class="{active:$state.includes('blog')||$state.includes('blog-edit')}")
+                        li(data-ng-class="{active:$state.includes('blog')}")
                             a(data-ui-sref="blog") 文章
-                        li(data-ng-class="{active:$state.includes('blog-create')}")
-                            a(data-ui-sref="blog-create") 新建文章
+                            ul(data-ng-show="$state.includes('blog')")
+                                li(data-ng-class="{active:$state.includes('blog.list')}")
+                                    a(data-ui-sref="blog.list") 所有文章
+                                li(data-ng-class="{active:$state.includes('blog.create')}")
+                                    a(data-ui-sref="blog.create") 新建文章
                         li(data-ng-class="{active:$state.includes('logger')}")
                             a(data-ui-sref="logger") 日志
 

@@ -132,12 +132,16 @@ exports.init = function(router, server){
     }
 };
 
-exports.interrupt = function(server,name){
+exports.interrupt = function(server,name,methods){
+    if(!methods) methods = ["get","put","post","delete"];
     server.use(name,function(req,res,next){
-        if(req.session.user){
+        if(!_.find(methods, function(v,i){
+           if(v.toLowerCase() == req.method.toLowerCase() && !req.session.user){
+               res.redirect("/auth?red="+encodeURIComponent(req.originalUrl));
+               return true;
+           }
+        })){
             next();
-        }else{
-            res.redirect("/auth?red="+encodeURIComponent(req.originalUrl));
-        }
+        };
     });
 };

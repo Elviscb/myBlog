@@ -16,6 +16,10 @@ exports.init = function(router, server){
         res.render("adminblog");
     });
 
+    router.get("/admin/blog-list", function(req,res,next){
+        res.render("adminbloglist");
+    });
+
     router.get("/admin/blog-create", function(req,res,next){
         res.render("adminblogcreate");
     });

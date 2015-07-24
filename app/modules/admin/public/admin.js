@@ -22,23 +22,27 @@ Cb(function(){
             $locationProvider.html5Mode(false);
 
             $stateProvider.state("blog",{
-                url: "/",
-                templateUrl: "/admin/blog",
+                abstract: true,
+                url: "/blog",
+                templateUrl: "/admin/blog"
+            }).state("blog.list",{
+                url: "",
+                templateUrl: "/admin/blog-list",
                 controller: "blogController"
-            }).state("blog-edit",{
-                url: "/blog-edit/:id",
-                templateUrl: "/admin/blog-create",
-                controller: "blogEditController"
-            }).state("blog-create",{
-                url: "/blog-create",
+            }).state("blog.create",{
+                url: "/create",
                 templateUrl: "/admin/blog-create",
                 controller: "blogCreateController"
+            }).state("blog.edit",{
+                url: "/:id",
+                templateUrl: "/admin/blog-create",
+                controller: "blogEditController"
             }).state("logger",{
                 url: "/logger",
                 templateUrl: "/admin/logger",
                 controller: "loggerController"
             });
-            $urlRouterProvider.otherwise("/");
+            $urlRouterProvider.otherwise("/blog");
 
     }]);
 
@@ -75,7 +79,9 @@ Cb(function(){
         //查看
         var template1 = angular.element("#template1");
         $scope.view = function(id){
-            Restangular.one('blog', id).get().then(function(data){
+            Restangular.one('blog', id).get({
+                marked: 1
+            }).then(function(data){
                 template1
                     .find(".modal-body > p")
                     .html(data.body)

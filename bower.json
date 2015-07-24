@@ -25,7 +25,6 @@
     "restangular": "1.4.0",
     "angular-ui-router": "0.2.13",
     "angular-sanitize": "1.2.5",
-    "restangular": "1.4.0",
     "normalize": "~1.0.4",
     "fontawesome": "4.3.0"
   }

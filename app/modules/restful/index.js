@@ -10,7 +10,7 @@ exports.init = function(router0, server){
     var auth = App.modules.auth;
     var router = express.Router();
 
-    auth.interrupt(server, App.config.restful_prefix);
+    auth.interrupt(server, App.config.restful_prefix, ["put","post"]);
 
     router.use(jsonServer.defaults[1]);
     router.use(jsonServer.defaults[2]);
