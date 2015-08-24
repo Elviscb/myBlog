@@ -90,10 +90,10 @@ module.exports = function (grunt) {
                 angular_module_name: config.pkg.name,
                 restful_prefix: config.restful_prefix,
                 css: function(filename){
-                    return config.assets["css"][filename] || filename + ".css";
+                    return "/" + (config.assets["css"][filename] || filename + ".css");
                 },
                 js: function(filename){
-                    return config.assets["js"][filename] || filename + ".js";
+                    return "/" + (config.assets["js"][filename] || filename + ".js");
                 }
             };
 
@@ -116,8 +116,12 @@ module.exports = function (grunt) {
             });
 
             _.each(App.modules, function(v,k){
+                var router_sub = express.Router();
                 //laod module
-                v.init(router, server);
+                v.init(router_sub, server);
+                if(k == "core"){
+                    server.use(router_sub);
+                }else server.use("/" + k, router_sub);
             });
 
             server.use(router);

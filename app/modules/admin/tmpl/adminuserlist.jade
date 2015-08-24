@@ -1,0 +1,36 @@
+//
+   Created by Administrator on 2015/8/5.
+legend.ins-title 用户
+div#user
+   table.table.table-striped.admlisttable
+      thead
+         tr
+            td 用户名
+            td 姓名
+            td 邮箱
+            td 文章
+            td
+      tbody
+         tr(data-ng-if="isloading")
+            td(colspan="4")
+               center(data-ng-bind="loading")
+         tr(data-ng-repeat="v in users")
+            td
+               a(data-ui-sref="user.edit({id:v.id})",data-ng-bind="v.nick")
+            td(data-ng-bind="v.name")
+            td(data-ng-bind="v.email")
+            td(data-ng-bind="v.article_num")
+            td
+               div.table-actions
+                  a.btn.btn-mini(data-ng-click="del(v.id)")
+                     i.icon-remove
+                     |  delete
+
+   div.pagination.pagination-centered
+      ul
+         li(data-ng-class="{disabled:page==1}")
+            a(href="#",data-ng-click="go(page-1)") «
+         li(data-ng-repeat="p in pager.pages",data-ng-class="{disabled:page==p}")
+            a(href="#",data-ng-bind="p",data-ng-click="go(p)")
+         li(data-ng-class="{disabled:page==pager.totalpage}")
+            a(href="#",data-ng-click="go(page+1)") »

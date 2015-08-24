@@ -37,5 +37,5 @@ module.exports.init = function(router, server){
             return res.statusCode < 400
         }
     });
-    server.use(morganStream);
+    router.use(morganStream);
 };

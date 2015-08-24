@@ -4,12 +4,26 @@ link(rel='stylesheet', href=locals.css('fontawesome/css/font-awesome.min'))
 legend.ins-title {{titletop}}文章
 div#blogcreate
     div.create-wrap
-        div.create-left
-            div.tip(data-ng-if="put_success==true") {{put_success_text}}
-            div.tip-false(data-ng-if="put_false==true") {{put_false_text}}
-            div.create-title
-                input(data-ng-model="title")
-            div
-                textarea#mdeditor(data-ng-model="body")
-        div.create-right
-            button.btn(data-ng-click="post()") 发布
+        div.tip(data-ng-if="put_success==true") {{put_success_text}}
+        div.tip-false(data-ng-if="put_false==true") {{put_false_text}}
+        table(cellpadding=5)
+            tr
+                td.pleft title
+                td
+                    div.input-wrap
+                        input(type="text", data-ng-model="data.title")
+            tr
+                td.pleft author
+                td
+                    div.input-wrap
+                        select(data-ng-model="data.userId")
+                            option(data-ng-repeat="u in users", data-ng-value="u.id", ng-selected="data.userId==u.id") {{u.name}}
+            tr
+                td.pleft body
+                td
+                    div
+                        textarea#mdeditor(data-ng-model="data.body")
+            tr
+                td.pleft
+                td
+                    button.btn(data-ng-click="post()") 发布

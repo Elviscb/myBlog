@@ -15,12 +15,12 @@ html
             div.nav-inner
                 a.btn(href="/") 首页
                 span &nbsp;&nbsp;
-                a.btn.btn-warning(href="/logout") 退出
+                a.btn.btn-warning(href="/auth/logout") 退出
 
                 div.menus
                     ul
                         li(data-ng-class="{active:$state.includes('blog')}")
-                            a(data-ui-sref="blog") 文章
+                            a(data-ui-sref="blog.list") 文章
                             ul(data-ng-show="$state.includes('blog')")
                                 li(data-ng-class="{active:$state.includes('blog.list')}")
                                     a(data-ui-sref="blog.list") 所有文章
@@ -28,6 +28,13 @@ html
                                     a(data-ui-sref="blog.create") 新建文章
                         li(data-ng-class="{active:$state.includes('logger')}")
                             a(data-ui-sref="logger") 日志
+                        li(data-ng-class="{active:$state.includes('user')}")
+                            a(data-ui-sref="user.list") 用户
+                            ul(data-ng-show="$state.includes('user')")
+                                li(data-ng-class="{active:$state.includes('user.list')}")
+                                    a(data-ui-sref="user.list") 所有用户
+                                li(data-ng-class="{active:$state.includes('user.create')}")
+                                    a(data-ui-sref="user.create") 新建用户
 
         div#main.container(data-ui-view)
 
@@ -55,6 +62,7 @@ html
         script(src=locals.js('admindirective'))
         script.
             Cb.config({
+                user: !{JSON.stringify(locals.req.session.user)},
                 restful_prefix: "#{restful_prefix}"
             });
             Cb.init();

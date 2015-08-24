@@ -32,12 +32,31 @@ Cb(function(){
             }).state("blog.create",{
                 url: "/create",
                 templateUrl: "/admin/blog-create",
-                controller: "blogCreateController"
+                controller: "blogOneController"
             }).state("blog.edit",{
                 url: "/:id",
                 templateUrl: "/admin/blog-create",
-                controller: "blogEditController"
-            }).state("logger",{
+                controller: "blogOneController"
+            })
+            //user
+            .state("user",{
+                abstract: true,
+                url: "/user",
+                templateUrl: "/admin/user"
+            }).state("user.list",{
+                url: "",
+                templateUrl: "/admin/user-list",
+                controller: "userController"
+            }).state("user.create",{
+                url: "/create",
+                templateUrl: "/admin/user-create",
+                controller: "userOneController"
+            }).state("user.edit",{
+                url: "/:id",
+                templateUrl: "/admin/user-create",
+                controller: "userOneController"
+            })
+            .state("logger",{
                 url: "/logger",
                 templateUrl: "/admin/logger",
                 controller: "loggerController"
@@ -54,7 +73,8 @@ Cb(function(){
     }]);
 
     app.controller("blogController", ["$scope", "$rootScope", "Restangular", "RestFulResponse", "Pager", "$http",
-    function($scope,$rootScope,Restangular,RestFulResponse,Pager,$http){
+        function($scope,$rootScope,Restangular,RestFulResponse,Pager,$http){
+
         $scope.limit=10;
         $scope.loading = "loading...";
         $scope.pager = {};
@@ -103,48 +123,33 @@ Cb(function(){
         $scope.go(1);
     }]);
 
-    app.controller("blogCreateController", ["$scope", "$rootScope", "Restangular","$http", function($scope,$rootScope,Restangular,$http){
-        var editor = new SimpleMDE({
-            element: $('#mdeditor')[0]
-        });
-        editor.render();
-        $scope.titletop = "新建";
-        $scope.post = function(){
-            if(!$scope.title){
-                $scope.put_success = false;
-                $scope.put_false = true;
-                $scope.put_false_text = "文章名为空.";
-                return;
-            }
-            Restangular.all('blog').post({
-                title: $scope.title,
-                body: editor.value(),
-                created_at: new Date()
-            }).then(function(){
-                $scope.put_success = true;
-                $scope.put_false = false;
-                $scope.put_success_text = "已保存";
-            });
-        };
-    }]);
-
-    app.controller("blogEditController", ["$scope", "$rootScope", "Restangular","$http", function($scope,$rootScope,Restangular,$http){
+    app.controller("blogOneController", ["$scope", "$rootScope", "Restangular","$http", function($scope,$rootScope,Restangular,$http){
         var editor;
+        $scope.titletop = "新增";
         $scope.blogid = $rootScope.$stateParams.id;
-        Restangular.one('blog', $scope.blogid).get().then(function(data){
-            $scope.titletop = "编辑";
-            $scope.title = data.title;
-            $scope.body = data.body;
+        $scope.blogid?
+            Restangular.one('blog', $scope.blogid).get().then(function(data){
+                $scope.titletop = "编辑";
+                $scope.data = data;
+                init();
+            }):init();
+        function init(){
+            Restangular.all('user').getList().then(function(data){
+                $scope.users = data;
+                if(!$scope.data) $scope.data = {};
+                if(!$scope.data.userId){
+                    $scope.data.userId = Cb.user.id;
+                }
+            });
             $scope.post = function(){
-                if(!$scope.title){
+                if(!$scope.data.title){
                     $scope.put_success = false;
                     $scope.put_false = true;
                     $scope.put_false_text = "文章名为空.";
                     return;
                 }
-                data.title = $scope.title;
-                data.body = editor.value();
-                data.put().then(function(data){
+                $scope.data.body = editor.value();
+                ($scope.data.put?$scope.data.put():Restangular.all('blog').post($scope.data)).then(function(data){
                     $scope.put_success = true;
                     $scope.put_false = false;
                     $scope.put_success_text = "已保存";
@@ -156,12 +161,69 @@ Cb(function(){
                 });
                 editor.render();
             });
-        });
+        }
     }]);
 
-    app.controller("loggerController", ["$scope", "$rootScope", "Logger", "$http", function($scope,$rootScope,Logger,$http){
-        Logger.visit().success(function(data){
+    app.controller("loggerController", ["$scope", "$rootScope", "$http", function($scope,$rootScope,$http){
+        $http.get("/admin/visitlog").success(function(data){
             $scope.data = data.result;
         });
     }]);
+
+    app.controller("userController", ["$scope", "$rootScope", "Restangular", "RestFulResponse", "Pager", "$http",
+        function($scope,$rootScope,Restangular,RestFulResponse,Pager,$http){
+
+        $scope.limit=10;
+        $scope.loading = "loading...";
+        $scope.pager = {};
+        $scope.go = function(page){
+            if(!page) page = $scope.page;
+            if(page < 1 || ($scope.pager.totalpage && page > $scope.pager.totalpage)) return;
+            $scope.page = page;
+            $scope.isloading = true;
+            RestFulResponse.all('user').getList({
+                _start: $scope.limit*(page-1),
+                _limit: $scope.limit
+            }).then(function(res) {
+                var users = res.data;
+                var total = res.headers("x-Total-Count");
+                $scope.pager = Pager.new(page,$scope.limit,10,total).format();
+                $scope.isloading = false;
+                $scope.users = users;
+            }).catch(function(){
+                $scope.isloading = false;
+            });
+        };
+        //init
+        $scope.go(1);
+
+    }]);
+
+    app.controller("userOneController", ["$scope", "$rootScope", "Restangular", "RestFulResponse", "Pager", "$http",
+        function($scope,$rootScope,Restangular,RestFulResponse,Pager,$http){
+
+            $scope.titletop = "新增";
+            $scope.userid = $rootScope.$stateParams.id;
+            $scope.userid?
+                Restangular.one('user', $scope.userid).get().then(function(data){
+                    $scope.titletop = "编辑";
+                    $scope.data = data;
+                    init();
+                }):init();
+            function init(){
+                $scope.post = function(){
+                    if(!$scope.data.nick){
+                        $scope.put_success = false;
+                        $scope.put_false = true;
+                        $scope.put_false_text = "用户名为空.";
+                        return;
+                    }
+                    ($scope.data.put?$scope.data.put():Restangular.all('user').post($scope.data)).then(function(){
+                        $scope.put_success = true;
+                        $scope.put_false = false;
+                        $scope.put_success_text = "已保存";
+                    });
+                };
+            }
+        }]);
 });

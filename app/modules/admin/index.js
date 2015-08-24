@@ -4,37 +4,51 @@ exports.init = function(router, server){
     var auth = App.modules.auth;
     var io = require('socket.io')(App.config.ioport);
 
-    auth.interrupt(router,"/admin");
+    auth.interrupt(router,"/");
 
-    router.get("/admin", function(req,res,next){
+    router.get("/", function(req,res,next){
         res.render("admin", {
 
         });
     });
 
-    router.get("/admin/blog", function(req,res,next){
+    router.get("/blog", function(req,res,next){
         res.render("adminblog");
     });
 
-    router.get("/admin/blog-list", function(req,res,next){
+    router.get("/blog-list", function(req,res,next){
         res.render("adminbloglist");
     });
 
-    router.get("/admin/blog-create", function(req,res,next){
+    router.get("/blog-create", function(req,res,next){
         res.render("adminblogcreate");
     });
 
-    router.get("/admin/logger", function(req,res,next){
+    router.get("/logger", function(req,res,next){
         res.render("adminlogger");
     });
 
-    router.get("/admin/visitlog", function(req,res,next){
+    router.get("/user", function(req,res,next){
+        res.render("adminuser");
+    });
+
+    router.get("/user-list", function(req,res,next){
+        res.render("adminuserlist");
+    });
+
+    router.get("/user-create", function(req,res,next){
+        res.render("adminusercreate");
+    });
+
+    router.get("/visitlog", function(req,res,next){
         App.tools.read_file(App.modules.logger.visitLogFile).then(function(data){
             res.jsonOk(data);
         }).fail(function(err){
             res.jsonError(err);
         });
     });
+
+
 
     /*
     var visitLogSteam = fs.createReadStream(App.modules.logger.visitLogFile, {

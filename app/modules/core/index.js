@@ -45,7 +45,7 @@ exports.init = function(router, server){
 
     router.get("/download/:id", function (req, res, next) {
 
-        var blog = App.modules.restful.jsonServerRouter.db("blog").find({id: parseInt(req.params.id)});
+        var blog = App.modules.Arestful.jsonServerRouter.db("blog").find({id: parseInt(req.params.id)});
 
         if(!blog) return next();
 

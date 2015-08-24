@@ -1,10 +1,11 @@
 legend.ins-title 文章
 div#article
-    table.table.table-striped
-        tbody
+    table.table.table-striped.admlisttable
+        thead
             tr
                 td 标题
                 td(colspan="2") 修改时间
+        tbody
             tr(data-ng-if="isloading")
                 td(colspan="4")
                     center(data-ng-bind="loading")

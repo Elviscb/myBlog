@@ -1,0 +1,26 @@
+legend.ins-title {{titletop}}用户
+
+
+div.create-wrap
+   div.tip(data-ng-if="put_success==true") {{put_success_text}}
+   div.tip-false(data-ng-if="put_false==true") {{put_false_text}}
+   table(cellpadding=5)
+      tr
+         td.pleft nick
+         td
+            div.input-wrap
+               input(type="text",placeholder="nick",data-ng-model="data.nick")
+      tr
+         td.pleft name
+         td
+            div.input-wrap
+               input(type="text",placeholder="name",data-ng-model="data.name")
+      tr
+         td.pleft email
+         td
+            div.input-wrap
+               input(type="text",placeholder="Email",data-ng-model="data.email")
+      tr
+         td.pleft
+         td
+            button.btn(data-ng-click="post()") save
